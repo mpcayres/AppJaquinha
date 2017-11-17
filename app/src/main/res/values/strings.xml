@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">AppJaquinha</string>
+    <string name="nav_drawer_home">Início</string>
+    <string name="nav_drawer_diario">Diário</string>
+    <string name="nav_drawer_geladeira">Geladeira</string>
+    <string name="nav_drawer_objetivos">Objetivos</string>
+    <string name="nav_drawer_estatisticas">Estatisticas</string>
+    <string name="nav_drawer_restricoes">Restrições</string>
+    <string name="nav_drawer_configuracoes">Configurações</string>
+    <string name="nav_drawer_exit">Sair</string>
 </resources>

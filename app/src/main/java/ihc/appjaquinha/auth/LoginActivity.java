@@ -1,7 +1,9 @@
-package ihc.appjaquinha;
+package ihc.appjaquinha.auth;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import ihc.appjaquinha.R;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -10,9 +10,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,13 +30,22 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import java.util.Calendar;
+import java.util.List;
+
 import ihc.appjaquinha.R;
+import ihc.appjaquinha.auth.LoginActivity;
 import ihc.appjaquinha.camera.OcrCaptureActivity;
+import ihc.appjaquinha.database.Alimento;
+import ihc.appjaquinha.database.ConsumoDia;
+import ihc.appjaquinha.database.Diario;
+import ihc.appjaquinha.database.Geladeira;
 import ihc.appjaquinha.database.User;
 
 
 public class ContainerActivity extends AppCompatActivity
-    implements HomeFragment.HomeOnClickListener{
+    implements HomeFragment.HomeOnClickListener,
+        AlimentoFragment.AlimentoOnClickListener {
 
     private static final String TAG = ContainerActivity.class.getSimpleName();
     private Toolbar toolbar;
@@ -41,6 +53,7 @@ public class ContainerActivity extends AppCompatActivity
 
     private DatabaseReference mDatabase;
     public static User user;
+    private String currentFragment;
 
     private static final int RC_OCR_CAPTURE = 9003;
 
@@ -68,9 +81,10 @@ public class ContainerActivity extends AppCompatActivity
             }
         });
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, new HomeFragment());
-        ft.commit();
+        Fragment fragment = new HomeFragment();
+        addFragment(fragment);
+        Calendar data_atual = Calendar.getInstance();
+        ((HomeFragment) fragment).setData(LoginActivity.dateToString(data_atual, "dd/MM/yyyy"));
     }
 
     @Override
@@ -125,6 +139,12 @@ public class ContainerActivity extends AppCompatActivity
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // confirmado -> novo alimento
+                            /*Fragment fragment = getVisibleFragment();
+                            if (fragment instanceof AlimentoFragment){
+                                ((AlimentoFragment) fragment).fillForm(new Alimento());
+                            } else{
+                                replaceFragment(new AlimentoFragment());
+                            }*/
                         }
                     })
                     .setNeutralButton(R.string.camera, new DialogInterface.OnClickListener() {
@@ -225,29 +245,27 @@ public class ContainerActivity extends AppCompatActivity
 
     private void switchFragment(int position) {
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-
         switch (position) {
             case 0:
-                ft.replace(R.id.container, new HomeFragment()).commit();
+                launchHome();
                 break;
             case 1:
-                ft.replace(R.id.container, new DiarioFragment()).commit();
+                replaceFragment(new DiarioFragment());
                 break;
             case 2:
-                ft.replace(R.id.container, new GeladeiraFragment()).commit();
+                replaceFragment(new GeladeiraFragment());
                 break;
             case 3:
-                ft.replace(R.id.container, new ObjetivosFragment()).commit();
+                replaceFragment(new ObjetivosFragment());
                 break;
             case 4:
-                ft.replace(R.id.container, new EstatisticasFragment()).commit();
+                replaceFragment(new EstatisticasFragment());
                 break;
             case 5:
-                ft.replace(R.id.container, new RestricoesFragment()).commit();
+                replaceFragment(new RestricoesFragment());
                 break;
             case 6:
-                ft.replace(R.id.container, new ConfiguracoesFragment()).commit();
+                replaceFragment(new ConfiguracoesFragment());
                 break;
             case 7:
                 FirebaseAuth.getInstance().signOut();
@@ -260,20 +278,27 @@ public class ContainerActivity extends AppCompatActivity
 
     private void addFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.layout_fragments, fragment);
+        transaction.add(R.id.container, fragment);
         transaction.commit();
     }
 
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction  transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.layout_fragments, fragment);
+        transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
-    @Override
-    public void onCameraSelected() {
-        launchCamera();
+    public Fragment getVisibleFragment(){
+        android.support.v4.app.FragmentManager fragmentManager = ContainerActivity.this.getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if(fragments != null){
+            for(Fragment fragment : fragments){
+                if(fragment != null && fragment.isVisible())
+                    return fragment;
+            }
+        }
+        return null;
     }
 
     private void launchCamera(){
@@ -281,7 +306,88 @@ public class ContainerActivity extends AppCompatActivity
         Intent intent = new Intent(this, OcrCaptureActivity.class);
         //intent.putExtra(OcrCaptureActivity.AutoFocus, autoFocus.isChecked());
         //intent.putExtra(OcrCaptureActivity.UseFlash, useFlash.isChecked());
-
         startActivityForResult(intent, RC_OCR_CAPTURE);
     }
+
+    private void launchHome(){
+        Calendar data_atual = Calendar.getInstance();
+        launchHome(LoginActivity.dateToString(data_atual, "dd/MM/yyyy"));
+    }
+
+    private void launchHome(String data){
+        Fragment fragment = new HomeFragment();
+        replaceFragment(fragment);
+        ((HomeFragment) fragment).setData(data);
+    }
+
+    private void addAlimentoDiario(final Alimento alimento, final String data){
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        final EditText input = new EditText(ContainerActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        builder.setView(input);
+        builder.setTitle("Determine a quantidade (g)")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        float qtd = Integer.parseInt(input.getText().toString());
+                        Diario diario = user.getDiario();
+                        List<ConsumoDia> consumoDiaList = diario.getConsumoDiaList();
+                        int i;
+                        for (i = 0; i < consumoDiaList.size(); i++) {
+                            ConsumoDia dia = consumoDiaList.get(i);
+                            if(dia.getData().equals(data)){
+                                dia.addAlimento(alimento, qtd);
+                                break;
+                            }
+                        }
+                        if(i == consumoDiaList.size()){
+                            ConsumoDia consumoDia = new ConsumoDia();
+                            consumoDia.setData(data);
+                            consumoDia.addAlimento(alimento, qtd);
+                            consumoDiaList.add(consumoDia);
+                        }
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    @Override
+    public void onCameraSelected() {
+        launchCamera();
+    }
+
+    @Override
+    public void onAlimentoSelected() {
+        replaceFragment(new AlimentoFragment());
+    }
+
+    @Override
+    public void onAlimentoCreated(Alimento alimento) {
+        onBackPressed();
+
+        Geladeira geladeira = user.getGeladeira();
+        geladeira.addAlimento(alimento);
+
+        Fragment fragment = getVisibleFragment();
+        if (fragment instanceof HomeFragment){
+            addAlimentoDiario(alimento, ((HomeFragment) fragment).getData());
+        }
+
+        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+    }
+
 }

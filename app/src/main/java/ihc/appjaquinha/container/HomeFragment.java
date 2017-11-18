@@ -4,19 +4,16 @@ package ihc.appjaquinha.container;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
-import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.text.TextBlock;
-import com.google.android.gms.vision.text.TextRecognizer;
+import android.widget.TextView;
 
 import ihc.appjaquinha.R;
 
 public class HomeFragment extends Fragment {
+    private String data;
+    private TextView textData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -27,15 +24,35 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        textData = view.findViewById(R.id.data);
+        if(data != null) textData.setText(data);
+
         view.findViewById(R.id.cameraButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((ContainerActivity) getActivity()).onCameraSelected();
             }
         });
+
+        view.findViewById(R.id.adicionarButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((ContainerActivity) getActivity()).onAlimentoSelected();
+            }
+        });
+    }
+
+    public void setData(String data){
+        this.data = data;
+        if(textData != null) textData.setText(data);
+    }
+
+    public String getData(){
+        return data;
     }
 
     public interface HomeOnClickListener {
         public void onCameraSelected();
-    };
+        public void onAlimentoSelected();
+    }
 }

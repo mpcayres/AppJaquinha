@@ -4,18 +4,18 @@ import java.util.HashMap;
 
 public class Objetivos {
     //tempo, quantidade
-    HashMap<String, Float> valorEnergetico; //kcal
-    HashMap<String, Float> carboidratos; //g
-    HashMap<String, Float> proteinas; //g
-    HashMap<String, Float> gordurasTotais; //g
-    HashMap<String, Float> gordurasSaturadas; //g
-    HashMap<String, Float> gordurasTrans; //g
-    HashMap<String, Float> fibraAlimentar; //g
-    HashMap<String, Float> sodio; //mg
-    HashMap<String, Float> acucares; //mg
-    HashMap<String, Float> colesterol; //mg
-    HashMap<String, Float> calcio; //mg
-    HashMap<String, Float> ferro; //mg
+    private HashMap<String, Float> valorEnergetico; //kcal
+    private HashMap<String, Float> carboidratos; //g
+    private HashMap<String, Float> proteinas; //g
+    private HashMap<String, Float> gordurasTotais; //g
+    private HashMap<String, Float> gordurasSaturadas; //g
+    private HashMap<String, Float> gordurasTrans; //g
+    private HashMap<String, Float> fibraAlimentar; //g
+    private HashMap<String, Float> sodio; //mg
+    private HashMap<String, Float> acucares; //mg
+    private HashMap<String, Float> colesterol; //mg
+    private HashMap<String, Float> calcio; //mg
+    private HashMap<String, Float> ferro; //mg
 
     public Objetivos() {
         valorEnergetico = new HashMap<>();

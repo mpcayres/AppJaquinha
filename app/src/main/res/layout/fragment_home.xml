@@ -8,6 +8,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
+    <TextView
+        android:id="@+id/data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sem_data"/>
+
     <Button
         android:id="@+id/cameraButton"
         android:layout_width="wrap_content"
@@ -17,6 +23,19 @@
         android:text="@string/camera"
         android:textSize="6pt"
         android:textColor="#00e2ba"
-        android:typeface="sans" />
+        android:typeface="sans"
+        android:layout_below="@id/data"/>
+
+    <Button
+        android:id="@+id/adicionarButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:text="@string/adicionar"
+        android:textSize="6pt"
+        android:textColor="#00e2ba"
+        android:typeface="sans"
+        android:layout_below="@id/cameraButton"/>
 
 </RelativeLayout>

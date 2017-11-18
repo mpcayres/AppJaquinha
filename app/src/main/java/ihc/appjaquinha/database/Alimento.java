@@ -3,24 +3,24 @@ package ihc.appjaquinha.database;
 import java.util.HashMap;
 
 public class Alimento {
-    String nome;
+    private String nome;
     //obrigatorios
-    int porcao; //g
-    int valorEnergetico; //kcal
-    int carboidratos; //g
-    int proteinas; //g
-    int gordurasTotais; //g
-    int gordurasSaturadas; //g
-    int gordurasTrans; //g
-    int fibraAlimentar; //g
-    int sodio; //mg
+    private int porcao; //g
+    private int valorEnergetico; //kcal
+    private int carboidratos; //g
+    private int proteinas; //g
+    private int gordurasTotais; //g
+    private int gordurasSaturadas; //g
+    private int gordurasTrans; //g
+    private int fibraAlimentar; //g
+    private int sodio; //mg
     //optativas
-    int acucares; //mg
-    int colesterol; //mg
-    int calcio; //mg
-    int ferro; //mg
+    private int acucares; //mg
+    private int colesterol; //mg
+    private int calcio; //mg
+    private int ferro; //mg
     //voluntarias
-    HashMap<String, Float> voluntario; //nome, valor - mg
+    private HashMap<String, Float> voluntario; //nome, valor - mg
 
     public Alimento() {
         voluntario = new HashMap<>();

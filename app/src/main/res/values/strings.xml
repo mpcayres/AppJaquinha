@@ -23,6 +23,26 @@
     <string name="altura">Altura</string>
     <string name="atualizar">Atualizar</string>
     <string name="camera">Camera</string>
+    <string name="salvar">Salvar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="adicionar">Adicionar alimento</string>
+    <string name="sem_data">Sem data</string>
+
+    //alimento
+    <string name="nome_alimento">Nome do alimento</string>
+    <string name="porcao">Porção (g)</string>
+    <string name="kcal">Valor energético (kcal)</string>
+    <string name="carboidrato">Carboidratos (g)</string>
+    <string name="proteinas">Proteínas (g)</string>
+    <string name="gordurasTotais">Gorduras Totais (g)</string>
+    <string name="gordurasSat">Gorduras Saturadas (g)</string>
+    <string name="gordurasTrans">Gorduras Trans (g)</string>
+    <string name="fibra">Fibra Alimentar (g)</string>
+    <string name="sodio">Sódio (mg)</string>
+    <string name="acucares">Açúcares (mg)</string>
+    <string name="colesterol">Colesterol (mg)</string>
+    <string name="calcio">Cálcio (mg)</string>
+    <string name="ferro">Ferro (mg)</string>
 
     //camera
     <string name="ok">OK</string>

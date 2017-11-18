@@ -40,14 +40,14 @@ public class RestricoesFragment extends Fragment {
         lactose = view.findViewById(R.id.checkBoxLactose);
         gluten = view.findViewById(R.id.checkBoxGluten);
 
-        if (user != null) {
-            amendoim.setChecked(user.isAmendoim());
-            leite.setChecked(user.isLeite());
-            mar.setChecked(user.isMar());
-            soja.setChecked(user.isSoja());
-            trigo.setChecked(user.isTrigo());
-            lactose.setChecked(user.isLactose());
-            gluten.setChecked(user.isGluten());
+        if (user != null && user.getRestricoes() != null) {
+            amendoim.setChecked(user.getRestricoes().isAmendoim());
+            leite.setChecked(user.getRestricoes().isLeite());
+            mar.setChecked(user.getRestricoes().isMar());
+            soja.setChecked(user.getRestricoes().isSoja());
+            trigo.setChecked(user.getRestricoes().isTrigo());
+            lactose.setChecked(user.getRestricoes().isLactose());
+            gluten.setChecked(user.getRestricoes().isGluten());
         }
 
         view.findViewById(R.id.atualizarbutton).setOnClickListener(new View.OnClickListener() {

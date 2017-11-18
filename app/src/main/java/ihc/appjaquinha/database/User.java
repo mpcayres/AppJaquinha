@@ -10,10 +10,17 @@ public class User {
     private String sexo;
     private float peso;
     private int altura;
-    private boolean amendoim, leite, mar, soja, trigo, lactose, gluten;
+    private Diario diario;
+    private Geladeira geladeira;
+    private Objetivos objetivos;
+    private Restricoes restricoes;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
+        this.diario = new Diario();
+        this.geladeira = new Geladeira();
+        this.objetivos = new Objetivos();
+        this.restricoes = new Restricoes();
     }
 
     public User(String email, String username, String nascimento, String sexo, float peso, int altura) {
@@ -23,7 +30,10 @@ public class User {
         this.sexo = sexo;
         this.peso = peso;
         this.altura = altura;
-        amendoim = leite = mar = soja = trigo = lactose = gluten = false;
+        this.diario = new Diario();
+        this.geladeira = new Geladeira();
+        this.objetivos = new Objetivos();
+        this.restricoes = new Restricoes();
     }
 
     public void SetConfiguracoes(String username, String nascimento, String sexo, float peso, int altura) {
@@ -36,13 +46,8 @@ public class User {
 
     public void SetRestricoes(boolean amendoim, boolean leite, boolean mar,
                               boolean soja, boolean trigo, boolean lactose, boolean gluten) {
-        this.amendoim = amendoim;
-        this.leite = leite;
-        this.mar = mar;
-        this.soja = soja;
-        this.trigo = trigo;
-        this.lactose = lactose;
-        this.trigo = trigo;
+        if(restricoes == null) restricoes = new Restricoes(amendoim, leite, mar, soja, trigo, lactose, gluten);
+        else restricoes.SetRestricoes(amendoim, leite, mar, soja, trigo, lactose, gluten);
     }
 
     public String getEmail() {
@@ -93,59 +98,35 @@ public class User {
         this.altura = altura;
     }
 
-    public boolean isAmendoim() {
-        return amendoim;
+    public Diario getDiario() {
+        return diario;
     }
 
-    public void setAmendoim(boolean amendoim) {
-        this.amendoim = amendoim;
+    public void setDiario(Diario diario) {
+        this.diario = diario;
     }
 
-    public boolean isLeite() {
-        return leite;
+    public Geladeira getGeladeira() {
+        return geladeira;
     }
 
-    public void setLeite(boolean leite) {
-        this.leite = leite;
+    public void setGeladeira(Geladeira geladeira) {
+        this.geladeira = geladeira;
     }
 
-    public boolean isMar() {
-        return mar;
+    public Objetivos getObjetivos() {
+        return objetivos;
     }
 
-    public void setMar(boolean mar) {
-        this.mar = mar;
+    public void setObjetivos(Objetivos objetivos) {
+        this.objetivos = objetivos;
     }
 
-    public boolean isSoja() {
-        return soja;
+    public Restricoes getRestricoes() {
+        return restricoes;
     }
 
-    public void setSoja(boolean soja) {
-        this.soja = soja;
-    }
-
-    public boolean isTrigo() {
-        return trigo;
-    }
-
-    public void setTrigo(boolean trigo) {
-        this.trigo = trigo;
-    }
-
-    public boolean isLactose() {
-        return lactose;
-    }
-
-    public void setLactose(boolean lactose) {
-        this.lactose = lactose;
-    }
-
-    public boolean isGluten() {
-        return gluten;
-    }
-
-    public void setGluten(boolean gluten) {
-        this.gluten = gluten;
+    public void setRestricoes(Restricoes restricoes) {
+        this.restricoes = restricoes;
     }
 }

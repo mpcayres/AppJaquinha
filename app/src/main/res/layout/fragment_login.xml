@@ -44,12 +44,14 @@
 
         <Button
             android:id="@+id/enterButton"
-            android:scaleType="fitCenter"
-            android:background="?android:attr/selectableItemBackground"
-            android:layout_width="82dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:contentDescription="@string/entrar"
+            android:background="@null"
+            android:text="@string/entrar"
+            android:textSize="6pt"
+            android:textColor="#00e2ba"
+            android:typeface="sans"
             app:layout_constraintRight_toRightOf="@id/senha"
             app:layout_constraintTop_toBottomOf="@id/senha" />
 
@@ -61,11 +63,10 @@
             android:text="@string/criar_conta"
             android:textSize="6pt"
             android:textColor="#00e2ba"
-            android:textAllCaps="false"
             android:typeface="sans"
             android:layout_marginTop="10dp"
             app:layout_constraintLeft_toLeftOf="@id/senha"
-            app:layout_constraintTop_toTopOf="@id/enterButton" />
+            app:layout_constraintTop_toBottomOf="@id/senha" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

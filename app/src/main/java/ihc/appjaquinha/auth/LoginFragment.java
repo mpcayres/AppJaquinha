@@ -47,12 +47,16 @@ public class LoginFragment extends Fragment {
                     senhaText.startAnimation(wiggle);
                     senhaText.setError("Preencha sua senha");
                 }
+                else if(senha.length() < 6) {
+                    senhaText.startAnimation(wiggle);
+                    senhaText.setError("Senha deve ter pelo menos 6 caracteres");
+                }
                 else if(mCallback != null) {
                     mCallback.onLoginInteraction(email, senha);
                 }
             }
         });
-        view.findViewById(R.id.cadastrobutton).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.criarconta).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mCallback != null) {

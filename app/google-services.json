@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "341720217406",
-    "firebase_url": "https://appjaquinha.firebaseio.com",
-    "project_id": "appjaquinha",
-    "storage_bucket": "appjaquinha.appspot.com"
+    "project_number": "178825480970",
+    "firebase_url": "https://appjaquinha-cadfb.firebaseio.com",
+    "project_id": "appjaquinha-cadfb",
+    "storage_bucket": "appjaquinha-cadfb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:341720217406:android:b80cd82381318944",
+        "mobilesdk_app_id": "1:178825480970:android:b80cd82381318944",
         "android_client_info": {
           "package_name": "ihc.appjaquinha"
         }
       },
       "oauth_client": [
         {
-          "client_id": "341720217406-ujhnkod1fcnrlt3eedq57aqumnndjksu.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ihc.appjaquinha",
-            "certificate_hash": "f2e00a952632602faf0fb2285676780c8f9b5bd6"
-          }
-        },
-        {
-          "client_id": "341720217406-si0tuecv6hc0u7da40eaghvo3n7e1sqj.apps.googleusercontent.com",
+          "client_id": "178825480970-48kf1ql7nlb6ris0gftvd3io3qdgp6d2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAHvs1ORjXgGBz1YHRQ54Igq0MekKho5Y0"
+          "current_key": "AIzaSyCIsw3heAHjdrsr8rzOi3HZABuORfj5yP4"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "341720217406-si0tuecv6hc0u7da40eaghvo3n7e1sqj.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

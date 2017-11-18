@@ -287,7 +287,6 @@ public class ContainerActivity extends AppCompatActivity
     private void addFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.container, fragment);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -346,7 +345,7 @@ public class ContainerActivity extends AppCompatActivity
         builder.setTitle("Determine a quantidade (g)")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        float qtd = Integer.parseInt(input.getText().toString());
+                        float qtd = Float.parseFloat(input.getText().toString());
                         Diario diario = user.getDiario();
                         List<ConsumoDia> consumoDiaList = diario.getConsumoDiaList();
                         int i;

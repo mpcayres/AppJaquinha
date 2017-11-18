@@ -2,6 +2,7 @@ package ihc.appjaquinha.database;
 
 import ihc.appjaquinha.database.comida.diario.Diario;
 import ihc.appjaquinha.database.comida.Geladeira;
+import ihc.appjaquinha.database.objetivos.Objetivos;
 
 public class User {
 

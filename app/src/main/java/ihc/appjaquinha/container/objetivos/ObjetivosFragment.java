@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -21,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ihc.appjaquinha.R;
@@ -35,6 +38,10 @@ public class ObjetivosFragment  extends Fragment implements AdapterView.OnItemSe
     private DatabaseReference mDatabase;
     private Spinner dropdown;
     private Boolean spinnerTouched = false;
+
+    ItensRecyclerViewAdapter objetivosRecyclerViewAdapter;
+    RecyclerView recyclerView;
+    ArrayList<String> objetivosArrayList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,10 +68,57 @@ public class ObjetivosFragment  extends Fragment implements AdapterView.OnItemSe
             }
         });
         dropdown.setOnItemSelectedListener(this);
+
+        setObjetivos();
+
+        recyclerView = view.findViewById(R.id.objetivos_recyclerview);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        objetivosRecyclerViewAdapter = new ItensRecyclerViewAdapter(objetivosArrayList, getActivity());
+        recyclerView.setAdapter(objetivosRecyclerViewAdapter);
+    }
+
+    private void setObjetivos(){
+        objetivosArrayList.clear();
+        if(user != null && user.getObjetivos() != null) {
+            addList(user.getObjetivos().getValorEnergetico(), "Valor Energético", "kcal");
+            addList(user.getObjetivos().getCarboidratos(), "Carboidratos", "g");
+            addList(user.getObjetivos().getProteinas(), "Proteínas", "g");
+            addList(user.getObjetivos().getGordurasTotais(), "Gorduras Totais", "g");
+            addList(user.getObjetivos().getGordurasSaturadas(),"Gorduras Saturadas", "g");
+            addList(user.getObjetivos().getGordurasTrans(), "Gorduras Trans", "g");
+            addList(user.getObjetivos().getFibraAlimentar(), "Fibra Alimentar", "g");
+            addList(user.getObjetivos().getSodio(), "Sódio", "mg");
+            addList(user.getObjetivos().getAcucares(), "Açúcares", "mg");
+            addList(user.getObjetivos().getColesterol(), "Colesterol", "mg");
+            addList(user.getObjetivos().getCalcio(), "Cálcio", "mg");
+            addList(user.getObjetivos().getFerro(), "Ferro", "mg");
+        }
+    }
+
+    private void addList(InfoObjetivo infoObjetivo, String campo, String valor){
+        if(infoObjetivo != null && infoObjetivo.getQuantidade() != null && infoObjetivo.getTempo() != null){
+            objetivosArrayList.add(campo + ": " + infoObjetivo.getQuantidade() +
+                    " " + valor + " / " + infoObjetivo.getTempo() + " dias");
+        }
     }
 
     public void onItemSelected(AdapterView<?> parent, View v, final int position, long id) {
         if (spinnerTouched) {
+            String valor = "g";
+            switch (position) {
+                case 0:
+                    valor = "kcal";
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                case 11:
+                    valor = "mg";
+                    break;
+            }
+
             AlertDialog.Builder builder;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Dialog_Alert);
@@ -72,26 +126,27 @@ public class ObjetivosFragment  extends Fragment implements AdapterView.OnItemSe
                 builder = new AlertDialog.Builder(getContext());
             }
 
-            final EditText inputQtd = new EditText(getContext());
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.MATCH_PARENT);
-            inputQtd.setLayoutParams(lp);
-            inputQtd.setHint("Quantidade (g)");
-            inputQtd.setInputType(InputType.TYPE_CLASS_NUMBER);
 
             final EditText inputDia = new EditText(getContext());
             inputDia.setLayoutParams(lp);
             inputDia.setHint("Periodicidade (dias)");
             inputDia.setInputType(InputType.TYPE_CLASS_NUMBER);
 
+            final EditText inputQtd = new EditText(getContext());
+            inputQtd.setLayoutParams(lp);
+            inputQtd.setHint("Quantidade (" + valor + ")");
+            inputQtd.setInputType(InputType.TYPE_CLASS_NUMBER);
+
             LinearLayout layout = new LinearLayout(getContext());
-            layout.addView(inputDia);
             layout.addView(inputQtd);
+            layout.addView(inputDia);
 
             builder.setView(layout);
             builder.setTitle(dropdown.getSelectedItem().toString())
-                    .setMessage("Determine a periodicidade (dias) e a quantidade (g)")
+                    .setMessage("Determine a quantidade (" + valor + ") e a periodicidade (dias)")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             switch (position) {
@@ -157,6 +212,8 @@ public class ObjetivosFragment  extends Fragment implements AdapterView.OnItemSe
                                     break;
                             }
                             mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+                            setObjetivos();
+                            objetivosRecyclerViewAdapter.swap();
                         }
                     })
                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

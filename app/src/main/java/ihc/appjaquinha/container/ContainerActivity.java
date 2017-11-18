@@ -81,6 +81,7 @@ public class ContainerActivity extends AppCompatActivity
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
                     user = singleSnapshot.getValue(User.class);
+                    Log.d("USER", "processado");
                 }
             }
             @Override
@@ -112,6 +113,22 @@ public class ContainerActivity extends AppCompatActivity
         if (fm.getBackStackEntryCount() > 0) {
             Log.i("MainActivity", "popping backstack");
             fm.popBackStack();
+            /*Fragment fragment = getVisibleFragment();
+            int position = 0;
+            if (fragment instanceof DiarioFragment){
+                position = 1;
+            } else if (fragment instanceof GeladeiraFragment){
+                position = 2;
+            } else if (fragment instanceof ObjetivosFragment){
+                position = 3;
+            } else if (fragment instanceof EstatisticasFragment){
+                position = 4;
+            } else if (fragment instanceof RestricoesFragment){
+                position = 5;
+            } else if (fragment instanceof ConfiguracoesFragment){
+                position = 6;
+            }
+            navDrawer.setSelectionAtPosition(position, false);*/
         } else {
             Log.i("MainActivity", "nothing on backstack, calling super");
             super.onBackPressed();

@@ -1,4 +1,4 @@
-package ihc.appjaquinha.database;
+package ihc.appjaquinha.database.comida;
 
 import java.util.HashMap;
 

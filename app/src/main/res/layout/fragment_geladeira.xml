@@ -33,19 +33,19 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText"
+                android:id="@+id/find"
                 android:layout_weight="1" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButton"
-                android:src="@android:drawable/ic_menu_save" />
+                android:id="@+id/adicionarButton"
+                android:src="@android:drawable/ic_menu_add" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButton2"
+                android:id="@+id/cameraButton"
                 android:src="@android:drawable/ic_menu_camera" />
         </LinearLayout>
 

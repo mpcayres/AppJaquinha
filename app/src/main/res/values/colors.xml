@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#221133</color>
-    <color name="colorPrimaryDark">#221133</color>
+    //https://material.io/guidelines/style/color.html
+    <color name="colorPrimary">#F3E5F5</color>
+    <color name="colorPrimaryDark">#E1BEE7</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="nav_drawer_bg">#221133</color>

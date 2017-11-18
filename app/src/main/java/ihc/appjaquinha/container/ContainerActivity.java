@@ -36,16 +36,17 @@ import java.util.List;
 import ihc.appjaquinha.R;
 import ihc.appjaquinha.auth.LoginActivity;
 import ihc.appjaquinha.camera.OcrCaptureActivity;
-import ihc.appjaquinha.database.Alimento;
-import ihc.appjaquinha.database.ConsumoDia;
-import ihc.appjaquinha.database.Diario;
-import ihc.appjaquinha.database.Geladeira;
+import ihc.appjaquinha.database.comida.Alimento;
+import ihc.appjaquinha.database.comida.diario.ConsumoDia;
+import ihc.appjaquinha.database.comida.diario.Diario;
+import ihc.appjaquinha.database.comida.Geladeira;
 import ihc.appjaquinha.database.User;
 
 
 public class ContainerActivity extends AppCompatActivity
     implements HomeFragment.HomeOnClickListener,
-        AlimentoFragment.AlimentoOnClickListener {
+        AlimentoFragment.AlimentoOnClickListener,
+        GeladeiraFragment.GeladeiraOnClickListener {
 
     private static final String TAG = ContainerActivity.class.getSimpleName();
     private Toolbar toolbar;
@@ -53,7 +54,6 @@ public class ContainerActivity extends AppCompatActivity
 
     private DatabaseReference mDatabase;
     public static User user;
-    private String currentFragment;
 
     private static final int RC_OCR_CAPTURE = 9003;
 
@@ -139,12 +139,12 @@ public class ContainerActivity extends AppCompatActivity
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // confirmado -> novo alimento
-                            /*Fragment fragment = getVisibleFragment();
+                            Fragment fragment = getVisibleFragment();
                             if (fragment instanceof AlimentoFragment){
                                 ((AlimentoFragment) fragment).fillForm(new Alimento());
                             } else{
                                 replaceFragment(new AlimentoFragment());
-                            }*/
+                            }
                         }
                     })
                     .setNeutralButton(R.string.camera, new DialogInterface.OnClickListener() {
@@ -279,6 +279,7 @@ public class ContainerActivity extends AppCompatActivity
     private void addFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.container, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -341,19 +342,20 @@ public class ContainerActivity extends AppCompatActivity
                         Diario diario = user.getDiario();
                         List<ConsumoDia> consumoDiaList = diario.getConsumoDiaList();
                         int i;
-                        for (i = 0; i < consumoDiaList.size(); i++) {
+                        for (i = consumoDiaList.size() - 1; i >= 0; i--) {
                             ConsumoDia dia = consumoDiaList.get(i);
                             if(dia.getData().equals(data)){
                                 dia.addAlimento(alimento, qtd);
                                 break;
                             }
                         }
-                        if(i == consumoDiaList.size()){
+                        if(i < 0){
                             ConsumoDia consumoDia = new ConsumoDia();
                             consumoDia.setData(data);
                             consumoDia.addAlimento(alimento, qtd);
                             consumoDiaList.add(consumoDia);
                         }
+                        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -385,9 +387,9 @@ public class ContainerActivity extends AppCompatActivity
         Fragment fragment = getVisibleFragment();
         if (fragment instanceof HomeFragment){
             addAlimentoDiario(alimento, ((HomeFragment) fragment).getData());
+        } else{
+            mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
         }
-
-        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
     }
 
 }

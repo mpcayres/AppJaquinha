@@ -15,4 +15,28 @@ public class GeladeiraFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_geladeira, container, false);
     }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        view.findViewById(R.id.cameraButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((ContainerActivity) getActivity()).onCameraSelected();
+            }
+        });
+
+        view.findViewById(R.id.adicionarButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((ContainerActivity) getActivity()).onAlimentoSelected();
+            }
+        });
+    }
+
+    public interface GeladeiraOnClickListener {
+        public void onCameraSelected();
+        public void onAlimentoSelected();
+    }
 }

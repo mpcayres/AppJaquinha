@@ -12,7 +12,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import ihc.appjaquinha.R;
-import ihc.appjaquinha.database.Alimento;
+import ihc.appjaquinha.database.comida.Alimento;
 
 public class AlimentoFragment extends Fragment {
     private DatabaseReference mDatabase;

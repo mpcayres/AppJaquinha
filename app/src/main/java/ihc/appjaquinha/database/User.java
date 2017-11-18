@@ -1,6 +1,7 @@
 package ihc.appjaquinha.database;
 
-import java.util.List;
+import ihc.appjaquinha.database.comida.diario.Diario;
+import ihc.appjaquinha.database.comida.Geladeira;
 
 public class User {
 

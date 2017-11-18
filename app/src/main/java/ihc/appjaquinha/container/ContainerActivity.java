@@ -1,10 +1,13 @@
 package ihc.appjaquinha.container;
 
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -96,20 +99,46 @@ public class ContainerActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == RC_OCR_CAPTURE) {
+            String status, message = "";
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null) {
-                    String text = data.getStringExtra(OcrCaptureActivity.TextBlockObject);
-                    //statusMessage.setText(R.string.ocr_success);
-                    //textValue.setText(text);
-                    Log.d(TAG, "Text read: " + text);
+                    message = data.getStringExtra(OcrCaptureActivity.TextBlockObject);
+                    status =  getResources().getString(R.string.ocr_success);
+                    Log.d(TAG, "Text read: " + message);
                 } else {
-                    //statusMessage.setText(R.string.ocr_failure);
+                    status = getResources().getString(R.string.ocr_failure);
                     Log.d(TAG, "No Text captured, intent data is null");
                 }
             } else {
-                //statusMessage.setText(String.format(getString(R.string.ocr_error),
-                //        CommonStatusCodes.getStatusCodeString(resultCode)));
+                status = (String.format(getString(R.string.ocr_error),
+                        CommonStatusCodes.getStatusCodeString(resultCode)));
             }
+
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+            } else {
+                builder = new AlertDialog.Builder(this);
+            }
+            builder.setTitle(status)
+                    .setMessage(message)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // confirmado -> novo alimento
+                        }
+                    })
+                    .setNeutralButton(R.string.camera, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            launchCamera();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }
         else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -244,6 +273,10 @@ public class ContainerActivity extends AppCompatActivity
 
     @Override
     public void onCameraSelected() {
+        launchCamera();
+    }
+
+    private void launchCamera(){
         // launch Ocr capture activity.
         Intent intent = new Intent(this, OcrCaptureActivity.class);
         //intent.putExtra(OcrCaptureActivity.AutoFocus, autoFocus.isChecked());

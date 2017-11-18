@@ -1,4 +1,4 @@
-package ihc.appjaquinha.container;
+package ihc.appjaquinha.container.home;
 
 
 import android.support.annotation.Nullable;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ihc.appjaquinha.R;
+import ihc.appjaquinha.container.ContainerActivity;
 
 public class HomeFragment extends Fragment {
     private String data;

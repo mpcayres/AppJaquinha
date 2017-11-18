@@ -1,4 +1,4 @@
-package ihc.appjaquinha.container;
+package ihc.appjaquinha.container.alimento;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,15 +12,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import ihc.appjaquinha.R;
+import ihc.appjaquinha.container.ContainerActivity;
 import ihc.appjaquinha.database.comida.Alimento;
 
 public class AlimentoFragment extends Fragment {
-    private DatabaseReference mDatabase;
     EditText textnome, textporcao, textvalorEnergetico, textcarboidratos, textproteinas, textgordurasTotais, textgordurasSaturadas, textgordurasTrans, textfibraAlimentar, textsodio, textacucares, textcolesterol, textcalcio, textferro;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         return inflater.inflate(R.layout.fragment_alimento, container, false);
     }
 

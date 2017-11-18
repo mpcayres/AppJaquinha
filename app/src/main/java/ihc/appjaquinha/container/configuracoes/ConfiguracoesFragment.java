@@ -1,4 +1,4 @@
-package ihc.appjaquinha.container;
+package ihc.appjaquinha.container.configuracoes;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;

@@ -1,4 +1,4 @@
-package ihc.appjaquinha.container;
+package ihc.appjaquinha.container.diario;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

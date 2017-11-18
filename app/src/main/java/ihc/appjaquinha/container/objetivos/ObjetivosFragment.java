@@ -1,4 +1,4 @@
-package ihc.appjaquinha.container;
+package ihc.appjaquinha.container.objetivos;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 
 import ihc.appjaquinha.R;
 
-public class EstatisticasFragment extends Fragment {
+public class ObjetivosFragment  extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_estatisticas, container, false);
+        return inflater.inflate(R.layout.fragment_objetivos, container, false);
     }
 }

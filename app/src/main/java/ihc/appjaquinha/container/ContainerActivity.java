@@ -1,6 +1,7 @@
 package ihc.appjaquinha.container;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,10 +25,12 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import ihc.appjaquinha.R;
+import ihc.appjaquinha.camera.OcrCaptureActivity;
 import ihc.appjaquinha.database.User;
 
 
-public class ContainerActivity extends AppCompatActivity {
+public class ContainerActivity extends AppCompatActivity
+    implements HomeFragment.HomeOnClickListener{
 
     private static final String TAG = ContainerActivity.class.getSimpleName();
     private Toolbar toolbar;
@@ -34,6 +38,8 @@ public class ContainerActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     public static User user;
+
+    private static final int RC_OCR_CAPTURE = 9003;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +90,29 @@ public class ContainerActivity extends AppCompatActivity {
         } else {
             Log.i("MainActivity", "nothing on backstack, calling super");
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == RC_OCR_CAPTURE) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+                    String text = data.getStringExtra(OcrCaptureActivity.TextBlockObject);
+                    //statusMessage.setText(R.string.ocr_success);
+                    //textValue.setText(text);
+                    Log.d(TAG, "Text read: " + text);
+                } else {
+                    //statusMessage.setText(R.string.ocr_failure);
+                    Log.d(TAG, "No Text captured, intent data is null");
+                }
+            } else {
+                //statusMessage.setText(String.format(getString(R.string.ocr_error),
+                //        CommonStatusCodes.getStatusCodeString(resultCode)));
+            }
+        }
+        else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -213,4 +242,13 @@ public class ContainerActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    @Override
+    public void onCameraSelected() {
+        // launch Ocr capture activity.
+        Intent intent = new Intent(this, OcrCaptureActivity.class);
+        //intent.putExtra(OcrCaptureActivity.AutoFocus, autoFocus.isChecked());
+        //intent.putExtra(OcrCaptureActivity.UseFlash, useFlash.isChecked());
+
+        startActivityForResult(intent, RC_OCR_CAPTURE);
+    }
 }

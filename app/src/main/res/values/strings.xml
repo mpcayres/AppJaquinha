@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">AppJaquinha</string>
+
+    //drawer
     <string name="nav_drawer_home">Início</string>
     <string name="nav_drawer_diario">Diário</string>
     <string name="nav_drawer_geladeira">Geladeira</string>
@@ -8,6 +10,8 @@
     <string name="nav_drawer_restricoes">Restrições</string>
     <string name="nav_drawer_configuracoes">Configurações</string>
     <string name="nav_drawer_exit">Sair</string>
+
+    //textos
     <string name="e_mail">E-mail</string>
     <string name="senha">Senha</string>
     <string name="criar_conta">Cadastrar</string>
@@ -18,4 +22,20 @@
     <string name="peso">Massa corporal</string>
     <string name="altura">Altura</string>
     <string name="atualizar">Atualizar</string>
+    <string name="camera">Camera</string>
+
+    //camera
+    <string name="ok">OK</string>
+    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
+    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
+    <string name="low_storage_error">Ocr dependencies cannot be downloaded due to low device storage</string>
+    <string name="title_activity_main">Ocr Detector Sample</string>
+    <string name="ocr_header">Click &quot;Detect Text&quot; to detect text</string>
+    <string name="read_text">Detect Text</string>
+    <string name="auto_focus">Auto Focus</string>
+    <string name="use_flash">Use Flash</string>
+    <string name="ocr_success">Text read successfully</string>
+    <string name="ocr_failure">No text captured</string>
+    <string name="ocr_error">"Error reading text: %1$s"</string>
+
 </resources>

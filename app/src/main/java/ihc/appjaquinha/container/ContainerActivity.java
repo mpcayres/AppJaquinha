@@ -11,12 +11,19 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import ihc.appjaquinha.R;
+import ihc.appjaquinha.database.User;
 
 
 public class ContainerActivity extends AppCompatActivity {
@@ -25,6 +32,9 @@ public class ContainerActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private Drawer navDrawer;
 
+    private DatabaseReference mDatabase;
+    public static User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +42,22 @@ public class ContainerActivity extends AppCompatActivity {
 
         setupToolbar();
         setupNavDrawer();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        Query dataUser = mDatabase.child("users").orderByKey().equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        dataUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
+                    user = singleSnapshot.getValue(User.class);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("ERROR", "onCancelled", databaseError.toException());
+            }
+        });
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, new HomeFragment());

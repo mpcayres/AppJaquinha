@@ -6,12 +6,11 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".container.fragments.RestricoesFragment">
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true">
 
@@ -27,8 +26,8 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="343dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="2">
 
@@ -63,12 +62,13 @@
                 android:layout_height="wrap_content"
                 android:text="Peixes e Frutos do Mar"
                 android:id="@+id/checkBoxPeixe"
-                android:checked="false" /><CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Soja"
-            android:id="@+id/checkBoxSoja"
-            android:checked="false" />
+                android:checked="false" />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Soja"
+                android:id="@+id/checkBoxSoja"
+                android:checked="false" />
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Intolerancias"
+                android:text="Intolerâncias"
                 android:id="@+id/textView4" />
 
             <CheckBox
@@ -99,4 +99,21 @@
         </LinearLayout>
 
     </GridLayout>
+
+    <Button
+        android:id="@+id/atualizarbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="11dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginEnd="13dp"
+        android:background="@null"
+        android:text="@string/atualizar"
+        android:textColor="#00e2ba"
+        android:textSize="6pt"
+        android:typeface="sans" />
+
 </RelativeLayout>

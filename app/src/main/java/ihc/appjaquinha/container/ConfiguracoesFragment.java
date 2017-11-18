@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,26 +13,21 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
 import ihc.appjaquinha.R;
-import ihc.appjaquinha.database.User;
 
 import static ihc.appjaquinha.auth.LoginActivity.dateToString;
 import static ihc.appjaquinha.auth.LoginActivity.stringToDate;
+import static ihc.appjaquinha.container.ContainerActivity.user;
 
 public class ConfiguracoesFragment extends Fragment {
     private DatabaseReference mDatabase;
     private EditText nomeText, dataText, sexoText, pesoText, alturaText;
     private DatePickerDialog data_Dialog;
-    private String email;
 
     @Nullable
     @Override
@@ -52,33 +46,13 @@ public class ConfiguracoesFragment extends Fragment {
         pesoText = view.findViewById(R.id.peso);
         alturaText = view.findViewById(R.id.altura);
 
-        Query dataUser = mDatabase.child("users").orderByKey().equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        dataUser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = null;
-                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
-                    user = singleSnapshot.getValue(User.class);
-                }
-                if (user != null) {
-                    email = user.getEmail();
-                    nomeText.setText(user.getUsername());
-                    dataText.setText(user.getNascimento());
-                    sexoText.setText(user.getSexo());
-                    pesoText.setText(String.valueOf(user.getPeso()));
-                    alturaText.setText(String.valueOf(user.getAltura()));
-
-                    if(!dataText.getText().toString().isEmpty()) {
-                        Calendar aux = stringToDate(dataText.getText().toString(), "dd/MM/yyyy");
-                        data_Dialog.updateDate(aux.get(Calendar.YEAR), aux.get(Calendar.MONTH), aux.get(Calendar.DAY_OF_MONTH));
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("ERROR", "onCancelled", databaseError.toException());
-            }
-        });
+        if (user != null) {
+            nomeText.setText(user.getUsername());
+            dataText.setText(user.getNascimento());
+            sexoText.setText(user.getSexo());
+            pesoText.setText(String.valueOf(user.getPeso()));
+            alturaText.setText(String.valueOf(user.getAltura()));
+        }
 
         Calendar data_atual = Calendar.getInstance();
         data_Dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
@@ -102,7 +76,7 @@ public class ConfiguracoesFragment extends Fragment {
             }
         });
 
-        view.findViewById(R.id.cadastrobutton).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.atualizarbutton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -114,7 +88,7 @@ public class ConfiguracoesFragment extends Fragment {
                 float peso = Float.parseFloat(pesoText.getText().toString());
                 int altura = Integer.parseInt(alturaText.getText().toString());
 
-                User user = new User(email, nome, data, sexo, peso, altura);
+                user.SetConfiguracoes(nome, data, sexo, peso, altura);
                 mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
             }
         });

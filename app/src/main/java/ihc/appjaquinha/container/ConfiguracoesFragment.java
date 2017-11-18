@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import ihc.appjaquinha.R;
 
-public class ConfiguracoesFragment  extends Fragment {
+public class ConfiguracoesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

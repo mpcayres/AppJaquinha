@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ihc.appjaquinha.auth.RegisterFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="12"
+            android:hint="@string/e_mail"
+            android:inputType="textEmailAddress"
+            android:textColor="#ffff"
+            android:backgroundTint="@android:color/white"
+            android:layout_marginTop="10dp"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <EditText
+            android:id="@+id/senha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="12"
+            android:backgroundTint="@android:color/white"
+            android:inputType="textPassword"
+            android:textColor="#ffff"
+            android:hint="@string/senha"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            app:layout_constraintTop_toBottomOf="@+id/email"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <EditText
+            android:id="@+id/nome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="12"
+            android:backgroundTint="@android:color/white"
+            android:inputType="textPersonName"
+            android:textColor="#ffff"
+            android:hint="@string/nome_de_usu_rio"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            app:layout_constraintTop_toBottomOf="@+id/senha"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <EditText
+            android:id="@+id/data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="12"
+            android:backgroundTint="@android:color/white"
+            android:inputType="text|datetime"
+            android:textColor="#ffff"
+            android:hint="@string/data_de_nascimento"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            android:focusable="false"
+            app:layout_constraintTop_toBottomOf="@+id/nome"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <EditText
+            android:id="@+id/sexo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="12"
+            android:backgroundTint="@android:color/white"
+            android:inputType="textAutoComplete"
+            android:textColor="#ffff"
+            android:hint="@string/sexo"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            app:layout_constraintTop_toBottomOf="@+id/data"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <EditText
+            android:id="@+id/peso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="12"
+            android:backgroundTint="@android:color/white"
+            android:inputType="textAutoComplete"
+            android:textColor="#ffff"
+            android:hint="@string/peso"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            app:layout_constraintTop_toBottomOf="@+id/sexo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <EditText
+            android:id="@+id/altura"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="12"
+            android:backgroundTint="@android:color/white"
+            android:inputType="textAutoComplete"
+            android:textColor="#ffff"
+            android:hint="@string/altura"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            app:layout_constraintTop_toBottomOf="@+id/peso"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <Button
+            android:id="@+id/cadastrobutton"
+            android:scaleType="fitCenter"
+            android:layout_width="82dp"
+            android:layout_height="30dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/entrar"
+            app:layout_constraintRight_toRightOf="@id/altura"
+            app:layout_constraintTop_toBottomOf="@+id/altura" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

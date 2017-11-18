@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ihc.appjaquinha.MainActivity">
+    tools:context="ihc.appjaquinha.auth.LoginActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -25,28 +25,14 @@
             android:id="@+id/textView2"
             android:layout_gravity="center_horizontal" />
 
-
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:id="@+id/layout_fragments"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"></LinearLayout>
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <Button
-            android:layout_marginTop="20px"
-            android:layout_width="146dp"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:id="@+id/button"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
-            android:layout_marginTop="20px"
-            android:layout_width="146dp"
-            android:layout_height="wrap_content"
-            android:text="Cadastro"
-            android:id="@+id/button2"
-            android:layout_gravity="center_horizontal" />
+        </LinearLayout>
 
         <ImageView
             android:layout_marginTop= "10dp"

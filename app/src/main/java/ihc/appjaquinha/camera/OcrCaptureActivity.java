@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
@@ -335,7 +336,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     }
 
     /**
-     * onTap is called to speak the tapped TextBlock, if any, out loud.
+     * onTap is called to return the info.
      *
      * @param rawX - the raw position of the tap
      * @param rawY - the raw position of the tap.
@@ -380,12 +381,46 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         return text != null;
     }
 
+    /**
+     * onPress is called to speak the pressed TextBlock, if any, out loud (api 21+).
+     *
+     * @param rawX - the raw position of the tap
+     * @param rawY - the raw position of the tap.
+     */
+    private void onPress(float rawX, float rawY) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            OcrGraphic graphic = mGraphicOverlay.getGraphicAtLocation(rawX, rawY);
+            TextBlock text = null;
+            if (graphic != null) {
+                text = graphic.getTextBlock();
+                if (text != null && text.getValue() != null) {
+                    Log.d(TAG, "text data is being spoken! " + text.getValue());
+                    // Speak the string.
+                    tts.speak(text.getValue(), TextToSpeech.QUEUE_ADD, null, "DEFAULT");
+                }
+                else {
+                    Log.d(TAG, "text data is null");
+                }
+            }
+            else {
+                Log.d(TAG,"no text detected");
+            }
+        }
+    }
+
     private class CaptureGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             return onTap(e.getRawX(), e.getRawY()) || super.onSingleTapConfirmed(e);
         }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            super.onLongPress(e);
+            onPress(e.getRawX(), e.getRawY());
+        }
+
     }
 
     private class ScaleListener implements ScaleGestureDetector.OnScaleGestureListener {

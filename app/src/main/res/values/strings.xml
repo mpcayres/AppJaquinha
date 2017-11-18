@@ -17,4 +17,5 @@
     <string name="sexo">Sexo</string>
     <string name="peso">Massa corporal</string>
     <string name="altura">Altura</string>
+    <string name="atualizar">Atualizar</string>
 </resources>

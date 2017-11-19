@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -77,16 +79,39 @@ public class ConfiguracoesFragment extends Fragment {
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
+                Animation wiggle = AnimationUtils.loadAnimation(getContext(), R.anim.wiggle);
+
                 String nome = nomeText.getText().toString();
                 String data = dataText.getText().toString();
                 String sexo = sexoText.getText().toString();
-                float peso = Float.parseFloat(pesoText.getText().toString());
-                int altura = Integer.parseInt(alturaText.getText().toString());
+                float peso = pesoText.getText().toString().isEmpty() ? 0 : Float.parseFloat(pesoText.getText().toString());
+                int altura = alturaText.getText().toString().isEmpty() ? 0 : Integer.parseInt(alturaText.getText().toString());
 
-                user.SetConfiguracoes(nome, data, sexo, peso, altura);
-                mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
-                Toast.makeText(getActivity(), "Usuário atualizado.",
-                        Toast.LENGTH_SHORT).show();
+                if(nome.isEmpty() || nome.equals("")) {
+                    nomeText.startAnimation(wiggle);
+                    nomeText.setError("Preencha seu nome de usuário");
+                }
+                else if(data.isEmpty() || data.equals("")) {
+                    dataText.startAnimation(wiggle);
+                    dataText.setError("Preencha sua data de nascimento");
+                }
+                else if(sexo.isEmpty() || sexo.equals("")) {
+                    sexoText.startAnimation(wiggle);
+                    sexoText.setError("Preencha seu sexo");
+                }
+                else if(peso == 0) {
+                    pesoText.startAnimation(wiggle);
+                    pesoText.setError("Preencha sua massa corporal");
+                }
+                else if(altura == 0) {
+                    alturaText.startAnimation(wiggle);
+                    alturaText.setError("Preencha sua altura");
+                } else {
+                    user.SetConfiguracoes(nome, data, sexo, peso, altura);
+                    mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+                    Toast.makeText(getActivity(), "Usuário atualizado.",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

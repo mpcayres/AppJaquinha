@@ -85,6 +85,10 @@ public class RegisterFragment extends Fragment {
                     senhaText.startAnimation(wiggle);
                     senhaText.setError("Preencha sua senha");
                 }
+                else if(nome.isEmpty() || nome.equals("")) {
+                    nomeText.startAnimation(wiggle);
+                    nomeText.setError("Preencha seu nome de usuário");
+                }
                 else if(data.isEmpty() || data.equals("")) {
                     dataText.startAnimation(wiggle);
                     dataText.setError("Preencha sua data de nascimento");

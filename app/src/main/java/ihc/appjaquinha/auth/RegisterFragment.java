@@ -70,8 +70,8 @@ public class RegisterFragment extends Fragment {
                 String nome = nomeText.getText().toString();
                 String data = dataText.getText().toString();
                 String sexo = sexoText.getText().toString();
-                float peso = Float.parseFloat(pesoText.getText().toString());
-                int altura = Integer.parseInt(alturaText.getText().toString());
+                float peso = pesoText.getText().toString().isEmpty() ? 0 : Float.parseFloat(pesoText.getText().toString());
+                int altura = alturaText.getText().toString().isEmpty() ? 0 : Integer.parseInt(alturaText.getText().toString());
 
                 if(email.isEmpty() || email.equals("")) {
                     emailText.startAnimation(wiggle);
@@ -84,6 +84,22 @@ public class RegisterFragment extends Fragment {
                 else if(senha.isEmpty() || senha.equals("")) {
                     senhaText.startAnimation(wiggle);
                     senhaText.setError("Preencha sua senha");
+                }
+                else if(data.isEmpty() || data.equals("")) {
+                    dataText.startAnimation(wiggle);
+                    dataText.setError("Preencha sua data de nascimento");
+                }
+                else if(sexo.isEmpty() || sexo.equals("")) {
+                    sexoText.startAnimation(wiggle);
+                    sexoText.setError("Preencha seu sexo");
+                }
+                else if(peso == 0) {
+                    pesoText.startAnimation(wiggle);
+                    pesoText.setError("Preencha sua massa corporal");
+                }
+                else if(altura == 0) {
+                    alturaText.startAnimation(wiggle);
+                    alturaText.setError("Preencha sua altura");
                 }
                 else if (mCallback != null) {
                     mCallback.onRegisterInteraction(email, senha, nome, data, sexo, peso, altura);

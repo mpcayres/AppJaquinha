@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
 import ihc.appjaquinha.R;
@@ -56,22 +58,29 @@ public class AlimentoFragment extends Fragment {
         view.findViewById(R.id.salvarbutton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Alimento alimentoNovo = new Alimento(textnome.getText().toString(),
-                        textporcao.getText().toString().isEmpty() ? 0 : Integer.parseInt(textporcao.getText().toString()),
-                        textvalorEnergetico.getText().toString().isEmpty() ? 0 : Integer.parseInt(textvalorEnergetico.getText().toString()),
-                        textcarboidratos.getText().toString().isEmpty() ? 0 : Integer.parseInt(textcarboidratos.getText().toString()),
-                        textproteinas.getText().toString().isEmpty() ? 0 : Integer.parseInt(textproteinas.getText().toString()),
-                        textgordurasTotais.getText().toString().isEmpty() ? 0 : Integer.parseInt(textgordurasTotais.getText().toString()),
-                        textgordurasSaturadas.getText().toString().isEmpty() ? 0 : Integer.parseInt(textgordurasSaturadas.getText().toString()),
-                        textgordurasTrans.getText().toString().isEmpty() ? 0 : Integer.parseInt(textgordurasTrans.getText().toString()),
-                        textfibraAlimentar.getText().toString().isEmpty() ? 0 : Integer.parseInt(textfibraAlimentar.getText().toString()),
-                        textsodio.getText().toString().isEmpty() ? 0 : Integer.parseInt(textsodio.getText().toString()),
-                        textacucares.getText().toString().isEmpty() ? 0 : Integer.parseInt(textacucares.getText().toString()),
-                        textcolesterol.getText().toString().isEmpty() ? 0 : Integer.parseInt(textcolesterol.getText().toString()),
-                        textcalcio.getText().toString().isEmpty() ? 0 : Integer.parseInt(textcalcio.getText().toString()),
-                        textferro.getText().toString().isEmpty() ? 0 : Integer.parseInt(textferro.getText().toString()));
-                if(!edit) ((ContainerActivity) getActivity()).onAlimentoCreated(alimentoNovo);
-                else ((ContainerActivity) getActivity()).onAlimentoEdited(alimentoNovo, position);
+                Animation wiggle = AnimationUtils.loadAnimation(getContext(), R.anim.wiggle);
+                if(textnome.getText().toString().isEmpty() || textnome.getText().toString().equals("")) {
+                    textnome.startAnimation(wiggle);
+                    textnome.setError("Preencha o nome do alimento");
+                } else {
+                    Alimento alimentoNovo = new Alimento(textnome.getText().toString(),
+                            textporcao.getText().toString().isEmpty() ? 0 : Integer.parseInt(textporcao.getText().toString()),
+                            textvalorEnergetico.getText().toString().isEmpty() ? 0 : Integer.parseInt(textvalorEnergetico.getText().toString()),
+                            textcarboidratos.getText().toString().isEmpty() ? 0 : Integer.parseInt(textcarboidratos.getText().toString()),
+                            textproteinas.getText().toString().isEmpty() ? 0 : Integer.parseInt(textproteinas.getText().toString()),
+                            textgordurasTotais.getText().toString().isEmpty() ? 0 : Integer.parseInt(textgordurasTotais.getText().toString()),
+                            textgordurasSaturadas.getText().toString().isEmpty() ? 0 : Integer.parseInt(textgordurasSaturadas.getText().toString()),
+                            textgordurasTrans.getText().toString().isEmpty() ? 0 : Integer.parseInt(textgordurasTrans.getText().toString()),
+                            textfibraAlimentar.getText().toString().isEmpty() ? 0 : Integer.parseInt(textfibraAlimentar.getText().toString()),
+                            textsodio.getText().toString().isEmpty() ? 0 : Integer.parseInt(textsodio.getText().toString()),
+                            textacucares.getText().toString().isEmpty() ? 0 : Integer.parseInt(textacucares.getText().toString()),
+                            textcolesterol.getText().toString().isEmpty() ? 0 : Integer.parseInt(textcolesterol.getText().toString()),
+                            textcalcio.getText().toString().isEmpty() ? 0 : Integer.parseInt(textcalcio.getText().toString()),
+                            textferro.getText().toString().isEmpty() ? 0 : Integer.parseInt(textferro.getText().toString()));
+                    if (!edit) ((ContainerActivity) getActivity()).onAlimentoCreated(alimentoNovo);
+                    else
+                        ((ContainerActivity) getActivity()).onAlimentoEdited(alimentoNovo, position);
+                }
             }
         });
 

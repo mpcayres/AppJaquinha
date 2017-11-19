@@ -108,8 +108,10 @@ public class LoginActivity extends AppCompatActivity
         } else {
             // If sign in fails, display a message to the user.
             Log.w("FAILURE", logTask + ":failure", task.getException());
-            Toast.makeText(LoginActivity.this, "Autenticação falhou.",
-                    Toast.LENGTH_SHORT).show();
+            if(logTask.equals("signInWithEmail")) {
+                Toast.makeText(LoginActivity.this, "Autenticação falhou.",
+                        Toast.LENGTH_SHORT).show();
+            }
             updateUI(null);
         }
     }

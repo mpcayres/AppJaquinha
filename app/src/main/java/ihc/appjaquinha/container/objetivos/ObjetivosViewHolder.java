@@ -7,12 +7,12 @@ import android.widget.TextView;
 
 import ihc.appjaquinha.R;
 
-public class ItensViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class ObjetivosViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private Context context;
     TextView titleTextView;
 
-    public ItensViewHolder(View itemView, Context context) {
+    public ObjetivosViewHolder(View itemView, Context context) {
         super(itemView);
 
         this.context = context;

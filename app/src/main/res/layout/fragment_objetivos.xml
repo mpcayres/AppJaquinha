@@ -14,8 +14,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/objetivos_recyclerview"
         android:scrollbars="vertical"
-        android:layout_width="247dp"
-        android:layout_height="130dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"

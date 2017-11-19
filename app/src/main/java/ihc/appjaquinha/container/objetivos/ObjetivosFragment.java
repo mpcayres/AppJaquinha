@@ -24,12 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import ihc.appjaquinha.R;
-import ihc.appjaquinha.container.ContainerActivity;
-import ihc.appjaquinha.database.comida.diario.ConsumoDia;
-import ihc.appjaquinha.database.comida.diario.Diario;
 import ihc.appjaquinha.database.objetivos.InfoObjetivo;
 
 import static ihc.appjaquinha.container.ContainerActivity.user;
@@ -39,7 +35,7 @@ public class ObjetivosFragment  extends Fragment implements AdapterView.OnItemSe
     private Spinner dropdown;
     private Boolean spinnerTouched = false;
 
-    ItensRecyclerViewAdapter objetivosRecyclerViewAdapter;
+    ObjetivosRecyclerViewAdapter objetivosRecyclerViewAdapter;
     RecyclerView recyclerView;
     ArrayList<String> objetivosArrayList = new ArrayList<>();
 
@@ -74,7 +70,7 @@ public class ObjetivosFragment  extends Fragment implements AdapterView.OnItemSe
         recyclerView = view.findViewById(R.id.objetivos_recyclerview);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        objetivosRecyclerViewAdapter = new ItensRecyclerViewAdapter(objetivosArrayList, getActivity());
+        objetivosRecyclerViewAdapter = new ObjetivosRecyclerViewAdapter(objetivosArrayList, getActivity());
         recyclerView.setAdapter(objetivosRecyclerViewAdapter);
     }
 

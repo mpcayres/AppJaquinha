@@ -5,20 +5,20 @@ import java.util.HashMap;
 public class Alimento {
     private String nome;
     //obrigatorios
-    private int porcao; //g
-    private int valorEnergetico; //kcal
-    private int carboidratos; //g
-    private int proteinas; //g
-    private int gordurasTotais; //g
-    private int gordurasSaturadas; //g
-    private int gordurasTrans; //g
-    private int fibraAlimentar; //g
-    private int sodio; //mg
+    private Integer porcao; //g
+    private Integer valorEnergetico; //kcal
+    private Integer carboidratos; //g
+    private Integer proteinas; //g
+    private Integer gordurasTotais; //g
+    private Integer gordurasSaturadas; //g
+    private Integer gordurasTrans; //g
+    private Integer fibraAlimentar; //g
+    private Integer sodio; //mg
     //optativas
-    private int acucares; //mg
-    private int colesterol; //mg
-    private int calcio; //mg
-    private int ferro; //mg
+    private Integer acucares; //mg
+    private Integer colesterol; //mg
+    private Integer calcio; //mg
+    private Integer ferro; //mg
     //voluntarias
     private HashMap<String, Float> voluntario; //nome, valor - mg
 
@@ -26,7 +26,7 @@ public class Alimento {
         voluntario = new HashMap<>();
     }
 
-    public Alimento(String nome, int porcao, int valorEnergetico, int carboidratos, int proteinas, int gordurasTotais, int gordurasSaturadas, int gordurasTrans, int fibraAlimentar, int sodio, int acucares, int colesterol, int calcio, int ferro) {
+    public Alimento(String nome, Integer porcao, Integer valorEnergetico, Integer carboidratos, Integer proteinas, Integer gordurasTotais, Integer gordurasSaturadas, Integer gordurasTrans, Integer fibraAlimentar, Integer sodio, Integer acucares, Integer colesterol, Integer calcio, Integer ferro) {
         this.nome = nome;
         this.porcao = porcao;
         this.valorEnergetico = valorEnergetico;
@@ -44,7 +44,7 @@ public class Alimento {
         voluntario = new HashMap<>();
     }
 
-    public Alimento(String nome, int porcao, int valorEnergetico, int carboidratos, int proteinas, int gordurasTotais, int gordurasSaturadas, int gordurasTrans, int fibraAlimentar, int sodio, int acucares, int colesterol, int calcio, int ferro, HashMap<String, Float> voluntario) {
+    public Alimento(String nome, Integer porcao, Integer valorEnergetico, Integer carboidratos, Integer proteinas, Integer gordurasTotais, Integer gordurasSaturadas, Integer gordurasTrans, Integer fibraAlimentar, Integer sodio, Integer acucares, Integer colesterol, Integer calcio, Integer ferro, HashMap<String, Float> voluntario) {
         this.nome = nome;
         this.porcao = porcao;
         this.valorEnergetico = valorEnergetico;
@@ -70,107 +70,107 @@ public class Alimento {
         this.nome = nome;
     }
 
-    public int getPorcao() {
+    public Integer getPorcao() {
         return porcao;
     }
 
-    public void setPorcao(int porcao) {
+    public void setPorcao(Integer porcao) {
         this.porcao = porcao;
     }
 
-    public int getValorEnergetico() {
+    public Integer getValorEnergetico() {
         return valorEnergetico;
     }
 
-    public void setValorEnergetico(int valorEnergetico) {
+    public void setValorEnergetico(Integer valorEnergetico) {
         this.valorEnergetico = valorEnergetico;
     }
 
-    public int getCarboidratos() {
+    public Integer getCarboidratos() {
         return carboidratos;
     }
 
-    public void setCarboidratos(int carboidratos) {
+    public void setCarboidratos(Integer carboidratos) {
         this.carboidratos = carboidratos;
     }
 
-    public int getProteinas() {
+    public Integer getProteinas() {
         return proteinas;
     }
 
-    public void setProteinas(int proteinas) {
+    public void setProteinas(Integer proteinas) {
         this.proteinas = proteinas;
     }
 
-    public int getGordurasTotais() {
+    public Integer getGordurasTotais() {
         return gordurasTotais;
     }
 
-    public void setGordurasTotais(int gordurasTotais) {
+    public void setGordurasTotais(Integer gordurasTotais) {
         this.gordurasTotais = gordurasTotais;
     }
 
-    public int getGordurasSaturadas() {
+    public Integer getGordurasSaturadas() {
         return gordurasSaturadas;
     }
 
-    public void setGordurasSaturadas(int gordurasSaturadas) {
+    public void setGordurasSaturadas(Integer gordurasSaturadas) {
         this.gordurasSaturadas = gordurasSaturadas;
     }
 
-    public int getGordurasTrans() {
+    public Integer getGordurasTrans() {
         return gordurasTrans;
     }
 
-    public void setGordurasTrans(int gordurasTrans) {
+    public void setGordurasTrans(Integer gordurasTrans) {
         this.gordurasTrans = gordurasTrans;
     }
 
-    public int getFibraAlimentar() {
+    public Integer getFibraAlimentar() {
         return fibraAlimentar;
     }
 
-    public void setFibraAlimentar(int fibraAlimentar) {
+    public void setFibraAlimentar(Integer fibraAlimentar) {
         this.fibraAlimentar = fibraAlimentar;
     }
 
-    public int getSodio() {
+    public Integer getSodio() {
         return sodio;
     }
 
-    public void setSodio(int sodio) {
+    public void setSodio(Integer sodio) {
         this.sodio = sodio;
     }
 
-    public int getAcucares() {
+    public Integer getAcucares() {
         return acucares;
     }
 
-    public void setAcucares(int acucares) {
+    public void setAcucares(Integer acucares) {
         this.acucares = acucares;
     }
 
-    public int getColesterol() {
+    public Integer getColesterol() {
         return colesterol;
     }
 
-    public void setColesterol(int colesterol) {
+    public void setColesterol(Integer colesterol) {
         this.colesterol = colesterol;
     }
 
-    public int getCalcio() {
+    public Integer getCalcio() {
         return calcio;
     }
 
-    public void setCalcio(int calcio) {
+    public void setCalcio(Integer calcio) {
         this.calcio = calcio;
     }
 
-    public int getFerro() {
+    public Integer getFerro() {
         return ferro;
     }
 
-    public void setFerro(int ferro) {
+    public void setFerro(Integer ferro) {
         this.ferro = ferro;
     }
 

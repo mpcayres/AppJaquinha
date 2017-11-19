@@ -17,15 +17,13 @@ import ihc.appjaquinha.database.comida.Alimento;
 
 public class AlimentoFragment extends Fragment {
     EditText textnome, textporcao, textvalorEnergetico, textcarboidratos, textproteinas, textgordurasTotais, textgordurasSaturadas, textgordurasTrans, textfibraAlimentar, textsodio, textacucares, textcolesterol, textcalcio, textferro;
+    Alimento alimento;
+    boolean edit = false;
+    int position = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_alimento, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_alimento, container, false);
 
         textnome = view.findViewById(R.id.nome);
         textporcao = view.findViewById(R.id.porcao);
@@ -41,6 +39,15 @@ public class AlimentoFragment extends Fragment {
         textcolesterol = view.findViewById(R.id.colesterol);
         textcalcio = view.findViewById(R.id.calcio);
         textferro = view.findViewById(R.id.ferro);
+
+        fillForm();
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         view.findViewById(R.id.camerabutton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +73,8 @@ public class AlimentoFragment extends Fragment {
                         textcolesterol.getText().toString().isEmpty() ? 0 : Integer.parseInt(textcolesterol.getText().toString()),
                         textcalcio.getText().toString().isEmpty() ? 0 : Integer.parseInt(textcalcio.getText().toString()),
                         textferro.getText().toString().isEmpty() ? 0 : Integer.parseInt(textferro.getText().toString()));
-                ((ContainerActivity) getActivity()).onAlimentoCreated(alimento);
+                if(!edit) ((ContainerActivity) getActivity()).onAlimentoCreated(alimento);
+                else ((ContainerActivity) getActivity()).onAlimentoEdited(alimento, position);
             }
         });
 
@@ -78,12 +86,35 @@ public class AlimentoFragment extends Fragment {
         });
     }
 
-    public void fillForm(Alimento alimento){
+    public void fillForm(){
+        if(alimento.getNome() != null) textnome.setText(alimento.getNome());
+        if(alimento.getPorcao() != null) textporcao.setText(String.valueOf(alimento.getPorcao()));
+        if(alimento.getValorEnergetico() != null) textvalorEnergetico.setText(String.valueOf(alimento.getValorEnergetico()));
+        if(alimento.getCarboidratos() != null) textcarboidratos.setText(String.valueOf(alimento.getCarboidratos()));
+        if(alimento.getProteinas() != null) textproteinas.setText(String.valueOf(alimento.getProteinas()));
+        if(alimento.getGordurasTotais() != null) textgordurasTotais.setText(String.valueOf(alimento.getGordurasTotais()));
+        if(alimento.getGordurasSaturadas() != null) textgordurasSaturadas.setText(String.valueOf(alimento.getGordurasSaturadas()));
+        if(alimento.getGordurasTrans() != null) textgordurasTrans.setText(String.valueOf(alimento.getGordurasTrans()));
+        if(alimento.getFibraAlimentar() != null) textfibraAlimentar.setText(String.valueOf(alimento.getFibraAlimentar()));
+        if(alimento.getSodio() != null) textsodio.setText(String.valueOf(alimento.getSodio()));
+        if(alimento.getAcucares() != null) textacucares.setText(String.valueOf(alimento.getAcucares()));
+        if(alimento.getColesterol() != null) textcolesterol.setText(String.valueOf(alimento.getColesterol()));
+        if(alimento.getCalcio() != null) textcalcio.setText(String.valueOf(alimento.getCalcio()));
+        if(alimento.getFerro() != null) textferro.setText(String.valueOf(alimento.getFerro()));
+    }
 
+    public void fillForm(Alimento alimento){
+        this.alimento = alimento;
+    }
+
+    public void setEdit(boolean edit, int position){
+        this.edit = edit;
+        this.position = position;
     }
 
     public interface AlimentoOnClickListener {
         public void onCameraSelected();
         public void onAlimentoCreated(Alimento alimento);
+        public void onAlimentoEdited(Alimento alimento, int position);
     };
 }

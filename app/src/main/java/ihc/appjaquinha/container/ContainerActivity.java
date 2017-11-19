@@ -30,7 +30,6 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -64,6 +63,7 @@ public class ContainerActivity extends AppCompatActivity
     private Drawer navDrawer;
 
     private DatabaseReference mDatabase;
+    private String uid;
     public static User user;
 
     private static final int RC_OCR_CAPTURE = 9003;
@@ -77,14 +77,21 @@ public class ContainerActivity extends AppCompatActivity
         setupNavDrawer();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        Query dataUser = mDatabase.child("users").orderByKey().equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        Query dataUser = mDatabase.child("users").orderByKey().equalTo(uid);
         dataUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
                     user = singleSnapshot.getValue(User.class);
                     Log.d("USER", "processado");
+                    Fragment fragment = getVisibleFragment();
+                    if(fragment instanceof HomeFragment) {
+                        ((HomeFragment) fragment).findDia();
+                    } else if(fragment instanceof GeladeiraFragment){
+                        ((GeladeiraFragment) fragment).setGeladeira();
+                    }
                 }
             }
             @Override
@@ -408,7 +415,11 @@ public class ContainerActivity extends AppCompatActivity
                             consumoDia.addAlimento(alimento, qtd);
                             consumoDiaList.add(consumoDia);
                         }
-                        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+                        mDatabase.child("users").child(uid).setValue(user);
+                        Fragment fragment = getVisibleFragment();
+                        if (fragment instanceof HomeFragment) {
+                            ((HomeFragment) fragment).setHome();
+                        }
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -429,9 +440,10 @@ public class ContainerActivity extends AppCompatActivity
 
         Fragment fragment = getVisibleFragment();
         if (fragment instanceof HomeFragment){
+            mDatabase.child("users").child(uid).setValue(user);
             addAlimentoDiario(alimento, ((HomeFragment) fragment).getData());
         } else{
-            mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+            mDatabase.child("users").child(uid).setValue(user);
         }
     }
 
@@ -446,16 +458,16 @@ public class ContainerActivity extends AppCompatActivity
         if(alimento != null) geladeira.getAlimentoList().set(position, alimento);
         else geladeira.getAlimentoList().remove(position);
 
-        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+        mDatabase.child("users").child(uid)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Map<String, Object> postValues = new HashMap<String, Object>();
+                        Map<String, Object> postValues = new HashMap<>();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             postValues.put(snapshot.getKey(), snapshot.getValue());
                         }
                         postValues.put("geladeira", geladeira);
-                        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(postValues);
+                        mDatabase.child("users").child(uid).updateChildren(postValues);
                     }
 
                     @Override
@@ -474,4 +486,33 @@ public class ContainerActivity extends AppCompatActivity
     public void onAlimentoRemoved(int position) {
         onAlimentoChanged(null, position);
     }
+
+    @Override
+    public void onDiarioEdited() {
+        final Diario diario = user.getDiario();
+
+        mDatabase.child("users").child(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Map<String, Object> postValues = new HashMap<>();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            postValues.put(snapshot.getKey(), snapshot.getValue());
+                        }
+                        postValues.put("diario", diario);
+                        mDatabase.child("users").child(uid).updateChildren(postValues);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+        Fragment fragment = getVisibleFragment();
+        if(fragment instanceof HomeFragment) {
+            ((HomeFragment) fragment).setHome();
+        }
+    }
+
 }

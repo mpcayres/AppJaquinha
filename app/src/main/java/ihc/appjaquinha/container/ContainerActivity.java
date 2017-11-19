@@ -30,8 +30,11 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ihc.appjaquinha.R;
 import ihc.appjaquinha.auth.LoginActivity;
@@ -345,7 +348,33 @@ public class ContainerActivity extends AppCompatActivity
         ((HomeFragment) fragment).setData(data);
     }
 
-    private void addAlimentoDiario(final Alimento alimento, final String data){
+    @Override
+    public void onCameraSelected() {
+        launchCamera();
+    }
+
+    @Override
+    public void onAlimentoSelected() {
+        replaceFragment(new AlimentoFragment());
+    }
+
+    @Override
+    public void onAlimentoSelected(Alimento alimento) {
+        Fragment fragment = new AlimentoFragment();
+        replaceFragment(fragment);
+        ((AlimentoFragment) fragment).fillForm(alimento);
+    }
+
+    @Override
+    public void onAlimentoSelectedEdit(Alimento alimento, int position) {
+        Fragment fragment = new AlimentoFragment();
+        replaceFragment(fragment);
+        ((AlimentoFragment) fragment).fillForm(alimento);
+        ((AlimentoFragment) fragment).setEdit(true, position);
+    }
+
+    @Override
+    public void addAlimentoDiario(final Alimento alimento, final String data){
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
@@ -392,16 +421,6 @@ public class ContainerActivity extends AppCompatActivity
     }
 
     @Override
-    public void onCameraSelected() {
-        launchCamera();
-    }
-
-    @Override
-    public void onAlimentoSelected() {
-        replaceFragment(new AlimentoFragment());
-    }
-
-    @Override
     public void onAlimentoCreated(Alimento alimento) {
         onBackPressed();
 
@@ -416,4 +435,43 @@ public class ContainerActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onAlimentoEdited(Alimento alimento, int position) {
+        onBackPressed();
+        onAlimentoChanged(alimento, position);
+    }
+
+    public void onAlimentoChanged(Alimento alimento, int position) {
+        final Geladeira geladeira = user.getGeladeira();
+        if(alimento != null) geladeira.getAlimentoList().set(position, alimento);
+        else geladeira.getAlimentoList().remove(position);
+
+        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Map<String, Object> postValues = new HashMap<String, Object>();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            postValues.put(snapshot.getKey(), snapshot.getValue());
+                        }
+                        postValues.put("geladeira", geladeira);
+                        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(postValues);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+        Fragment fragment = getVisibleFragment();
+        if(fragment instanceof GeladeiraFragment) {
+            ((GeladeiraFragment) fragment).setGeladeira();
+        }
+    }
+
+    @Override
+    public void onAlimentoRemoved(int position) {
+        onAlimentoChanged(null, position);
+    }
 }

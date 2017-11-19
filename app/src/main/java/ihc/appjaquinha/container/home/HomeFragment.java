@@ -91,6 +91,8 @@ public class HomeFragment extends Fragment {
         if(posDiario >= 0){
             ConsumoDia c = user.getDiario().getConsumoDiaList().get(posDiario);
             setHome(c);
+        } else{
+            findDia();
         }
     }
 

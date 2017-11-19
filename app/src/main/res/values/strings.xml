@@ -19,8 +19,8 @@
     <string name="nome_de_usu_rio">Nome de usuário</string>
     <string name="data_de_nascimento">Data de nascimento</string>
     <string name="sexo">Sexo</string>
-    <string name="peso">Massa corporal</string>
-    <string name="altura">Altura</string>
+    <string name="peso">Massa corporal (kg)</string>
+    <string name="altura">Altura (cm)</string>
     <string name="atualizar">Atualizar</string>
     <string name="camera">Camera</string>
     <string name="salvar">Salvar</string>

@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -209,6 +210,8 @@ public class ObjetivosFragment  extends Fragment implements AdapterView.OnItemSe
                                     break;
                             }
                             mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+                            Toast.makeText(getActivity(), "Objetivos atualizados.",
+                                    Toast.LENGTH_SHORT).show();
                             setObjetivos();
                         }
                     })

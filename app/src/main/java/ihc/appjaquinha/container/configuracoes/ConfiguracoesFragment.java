@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -84,6 +85,8 @@ public class ConfiguracoesFragment extends Fragment {
 
                 user.SetConfiguracoes(nome, data, sexo, peso, altura);
                 mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+                Toast.makeText(getActivity(), "Usuário atualizado.",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

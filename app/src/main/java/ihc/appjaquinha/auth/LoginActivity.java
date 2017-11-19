@@ -101,12 +101,14 @@ public class LoginActivity extends AppCompatActivity
             // Sign in success, update UI with the signed-in user's information
             Log.d("SUCCESS", logTask + ":success");
             FirebaseUser firebaseUser = mAuth.getCurrentUser();
-            if(user != null) writeNewUser(FirebaseAuth.getInstance().getCurrentUser().getUid(), user);
+            if(user != null) {
+                writeNewUser(FirebaseAuth.getInstance().getCurrentUser().getUid(), user);
+            }
             updateUI(firebaseUser);
         } else {
             // If sign in fails, display a message to the user.
             Log.w("FAILURE", logTask + ":failure", task.getException());
-            Toast.makeText(LoginActivity.this, "Authentication failed.",
+            Toast.makeText(LoginActivity.this, "Autenticação falhou.",
                     Toast.LENGTH_SHORT).show();
             updateUI(null);
         }
@@ -120,7 +122,13 @@ public class LoginActivity extends AppCompatActivity
                 if(dataSnapshot.getChildrenCount() < 1){
                     mDatabase.child("users").child(userId).setValue(user);
                     Log.d("NEWUSER", "true");
-                } else Log.d("NEWUSER", "false");
+                    Toast.makeText(LoginActivity.this, "Usuário cadastrado.",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d("NEWUSER", "false");
+                    Toast.makeText(LoginActivity.this, "Usuário autenticado.",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

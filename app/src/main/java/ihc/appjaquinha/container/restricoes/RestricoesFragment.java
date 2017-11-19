@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -48,6 +49,8 @@ public class RestricoesFragment extends Fragment {
                 user.SetRestricoes(amendoim.isChecked(), leite.isChecked(), mar.isChecked(),
                         soja.isChecked(), trigo.isChecked(), lactose.isChecked(), gluten.isChecked());
                 mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+                Toast.makeText(getActivity(), "Restrições atualizadas.",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

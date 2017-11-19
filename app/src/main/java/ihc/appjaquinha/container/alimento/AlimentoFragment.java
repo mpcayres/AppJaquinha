@@ -8,9 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import ihc.appjaquinha.R;
 import ihc.appjaquinha.container.ContainerActivity;
 import ihc.appjaquinha.database.comida.Alimento;

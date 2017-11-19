@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.firebase.auth.FirebaseAuth;
@@ -409,6 +410,8 @@ public class ContainerActivity extends AppCompatActivity
                             consumoDiaList.add(consumoDia);
                         }
                         mDatabase.child("users").child(uid).setValue(user);
+                        Toast.makeText(ContainerActivity.this, "Alimento adicionado ao diário.",
+                                Toast.LENGTH_SHORT).show();
                         Fragment fragment = getVisibleFragment();
                         if (fragment instanceof HomeFragment) {
                             ((HomeFragment) fragment).setHome();
@@ -438,6 +441,8 @@ public class ContainerActivity extends AppCompatActivity
         } else{
             mDatabase.child("users").child(uid).setValue(user);
         }
+        Toast.makeText(ContainerActivity.this, "Alimento cadastrado na geladeira.",
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -446,7 +451,7 @@ public class ContainerActivity extends AppCompatActivity
         onAlimentoChanged(alimento, position);
     }
 
-    public void onAlimentoChanged(Alimento alimento, int position) {
+    public void onAlimentoChanged(final Alimento alimento, int position) {
         final Geladeira geladeira = user.getGeladeira();
         if(alimento != null) geladeira.getAlimentoList().set(position, alimento);
         else geladeira.getAlimentoList().remove(position);
@@ -461,6 +466,13 @@ public class ContainerActivity extends AppCompatActivity
                         }
                         postValues.put("geladeira", geladeira);
                         mDatabase.child("users").child(uid).updateChildren(postValues);
+                        if(alimento != null) {
+                            Toast.makeText(ContainerActivity.this, "Alimento modificado.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else{
+                            Toast.makeText(ContainerActivity.this, "Alimento deletado.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -494,6 +506,8 @@ public class ContainerActivity extends AppCompatActivity
                         }
                         postValues.put("diario", diario);
                         mDatabase.child("users").child(uid).updateChildren(postValues);
+                        Toast.makeText(ContainerActivity.this, "Diário editado.",
+                                Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

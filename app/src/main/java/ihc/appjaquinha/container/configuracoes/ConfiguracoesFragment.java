@@ -46,13 +46,7 @@ public class ConfiguracoesFragment extends Fragment {
         pesoText = view.findViewById(R.id.peso);
         alturaText = view.findViewById(R.id.altura);
 
-        if (user != null) {
-            nomeText.setText(user.getUsername());
-            dataText.setText(user.getNascimento());
-            sexoText.setText(user.getSexo());
-            pesoText.setText(String.valueOf(user.getPeso()));
-            alturaText.setText(String.valueOf(user.getAltura()));
-        }
+        setConfiguracoes();
 
         Calendar data_atual = Calendar.getInstance();
         data_Dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
@@ -92,5 +86,15 @@ public class ConfiguracoesFragment extends Fragment {
                 mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
             }
         });
+    }
+
+    public void setConfiguracoes(){
+        if (user != null) {
+            nomeText.setText(user.getUsername());
+            dataText.setText(user.getNascimento());
+            sexoText.setText(user.getSexo());
+            pesoText.setText(String.valueOf(user.getPeso()));
+            alturaText.setText(String.valueOf(user.getAltura()));
+        }
     }
 }

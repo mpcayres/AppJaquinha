@@ -40,15 +40,7 @@ public class RestricoesFragment extends Fragment {
         lactose = view.findViewById(R.id.checkBoxLactose);
         gluten = view.findViewById(R.id.checkBoxGluten);
 
-        if (user != null && user.getRestricoes() != null) {
-            amendoim.setChecked(user.getRestricoes().isAmendoim());
-            leite.setChecked(user.getRestricoes().isLeite());
-            mar.setChecked(user.getRestricoes().isMar());
-            soja.setChecked(user.getRestricoes().isSoja());
-            trigo.setChecked(user.getRestricoes().isTrigo());
-            lactose.setChecked(user.getRestricoes().isLactose());
-            gluten.setChecked(user.getRestricoes().isGluten());
-        }
+        setRestricoes();
 
         view.findViewById(R.id.atualizarbutton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,5 +50,17 @@ public class RestricoesFragment extends Fragment {
                 mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
             }
         });
+    }
+
+    public void setRestricoes(){
+        if (user != null && user.getRestricoes() != null) {
+            amendoim.setChecked(user.getRestricoes().isAmendoim());
+            leite.setChecked(user.getRestricoes().isLeite());
+            mar.setChecked(user.getRestricoes().isMar());
+            soja.setChecked(user.getRestricoes().isSoja());
+            trigo.setChecked(user.getRestricoes().isTrigo());
+            lactose.setChecked(user.getRestricoes().isLactose());
+            gluten.setChecked(user.getRestricoes().isGluten());
+        }
     }
 }

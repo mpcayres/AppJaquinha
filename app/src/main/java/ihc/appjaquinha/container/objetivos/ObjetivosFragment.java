@@ -74,7 +74,7 @@ public class ObjetivosFragment  extends Fragment implements AdapterView.OnItemSe
         recyclerView.setAdapter(objetivosRecyclerViewAdapter);
     }
 
-    private void setObjetivos(){
+    public void setObjetivos(){
         objetivosArrayList.clear();
         if(user != null && user.getObjetivos() != null) {
             addList(user.getObjetivos().getValorEnergetico(), "Valor Energético", "kcal");
@@ -90,6 +90,7 @@ public class ObjetivosFragment  extends Fragment implements AdapterView.OnItemSe
             addList(user.getObjetivos().getCalcio(), "Cálcio", "mg");
             addList(user.getObjetivos().getFerro(), "Ferro", "mg");
         }
+        if(objetivosRecyclerViewAdapter != null) objetivosRecyclerViewAdapter.swap();
     }
 
     private void addList(InfoObjetivo infoObjetivo, String campo, String valor){
@@ -209,7 +210,6 @@ public class ObjetivosFragment  extends Fragment implements AdapterView.OnItemSe
                             }
                             mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
                             setObjetivos();
-                            objetivosRecyclerViewAdapter.swap();
                         }
                     })
                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

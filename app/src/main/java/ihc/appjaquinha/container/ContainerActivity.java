@@ -56,7 +56,8 @@ import ihc.appjaquinha.database.User;
 public class ContainerActivity extends AppCompatActivity
     implements HomeFragment.HomeOnClickListener,
         AlimentoFragment.AlimentoOnClickListener,
-        GeladeiraFragment.GeladeiraOnClickListener {
+        GeladeiraFragment.GeladeiraOnClickListener,
+        DiarioFragment.DiarioOnClickListener {
 
     private static final String TAG = ContainerActivity.class.getSimpleName();
     private Toolbar toolbar;
@@ -91,6 +92,14 @@ public class ContainerActivity extends AppCompatActivity
                         ((HomeFragment) fragment).findDia();
                     } else if(fragment instanceof GeladeiraFragment){
                         ((GeladeiraFragment) fragment).setGeladeira();
+                    } else if(fragment instanceof DiarioFragment){
+                        ((DiarioFragment) fragment).setDiario();
+                    } else if(fragment instanceof ObjetivosFragment){
+                        ((ObjetivosFragment) fragment).setObjetivos();
+                    } else if(fragment instanceof RestricoesFragment) {
+                        ((RestricoesFragment) fragment).setRestricoes();
+                    } else if(fragment instanceof ConfiguracoesFragment) {
+                        ((ConfiguracoesFragment) fragment).setConfiguracoes();
                     }
                 }
             }
@@ -123,22 +132,6 @@ public class ContainerActivity extends AppCompatActivity
         if (fm.getBackStackEntryCount() > 0) {
             Log.i("MainActivity", "popping backstack");
             fm.popBackStack();
-            /*Fragment fragment = getVisibleFragment();
-            int position = 0;
-            if (fragment instanceof DiarioFragment){
-                position = 1;
-            } else if (fragment instanceof GeladeiraFragment){
-                position = 2;
-            } else if (fragment instanceof ObjetivosFragment){
-                position = 3;
-            } else if (fragment instanceof EstatisticasFragment){
-                position = 4;
-            } else if (fragment instanceof RestricoesFragment){
-                position = 5;
-            } else if (fragment instanceof ConfiguracoesFragment){
-                position = 6;
-            }
-            navDrawer.setSelectionAtPosition(position, false);*/
         } else {
             Log.i("MainActivity", "nothing on backstack, calling super");
             super.onBackPressed();
@@ -512,7 +505,14 @@ public class ContainerActivity extends AppCompatActivity
         Fragment fragment = getVisibleFragment();
         if(fragment instanceof HomeFragment) {
             ((HomeFragment) fragment).setHome();
+        } else if(fragment instanceof DiarioFragment){
+            ((DiarioFragment) fragment).setDiario();
         }
+    }
+
+    @Override
+    public void onHomeSelected(String data) {
+        launchHome(data);
     }
 
 }

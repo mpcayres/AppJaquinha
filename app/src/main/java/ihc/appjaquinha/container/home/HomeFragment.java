@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ public class HomeFragment extends Fragment implements SearchBar.SearchBarListene
     RecyclerView recyclerView;
     ArrayList<String> homeArrayList = new ArrayList<>();
     int posDiario = -1;
+    boolean setSearchBar = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class HomeFragment extends Fragment implements SearchBar.SearchBarListene
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(data != null) ((ContainerActivity) getActivity()).setToolbarText(data);
+        if(data != null) setData(data);
 
         recyclerView = view.findViewById(R.id.home_recyclerview);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -57,6 +59,10 @@ public class HomeFragment extends Fragment implements SearchBar.SearchBarListene
         view.findViewById(R.id.cameraButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(searchBar != null){
+                    searchBar.dismissKeyboard();
+                }
+                setSearchBar = false;
                 ((ContainerActivity) getActivity()).onCameraSelected();
             }
         });
@@ -64,9 +70,29 @@ public class HomeFragment extends Fragment implements SearchBar.SearchBarListene
         view.findViewById(R.id.adicionarButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(searchBar != null){
+                    searchBar.dismissKeyboard();
+                }
+                setSearchBar = false;
                 ((ContainerActivity) getActivity()).onAlimentoSelected();
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(searchBar != null){
+            searchBar.dismissKeyboard();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(searchBar != null){
+            searchBar.dismissKeyboard();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void setData(String data){
@@ -131,17 +157,21 @@ public class HomeFragment extends Fragment implements SearchBar.SearchBarListene
         return data;
     }
 
-    private void setupSearchBar() {
+    public void setupSearchBar() {
         if(searchBar != null) {
-            searchBar.setupSearchBar(getActivity(), this, user.getGeladeira().getAlimentoList());
+            if(!setSearchBar) {
+                searchBar.setupSearchBar(getActivity(), this, user.getGeladeira().getAlimentoList());
+                setSearchBar = true;
+            } else{
+                searchBar.changeArrayAdapter(user.getGeladeira().getAlimentoList());
+            }
         }
     }
 
     @Override
     public void onDropDownItemClicked(int indiceOriginal) {
         ((ContainerActivity) getActivity()).addAlimentoDiario(
-                user.getGeladeira().getAlimentoList().get(indiceOriginal),
-                dateToString(Calendar.getInstance(), "dd/MM/yyyy"));
+                user.getGeladeira().getAlimentoList().get(indiceOriginal), data);
         searchBar.dismissKeyboard();
     }
 

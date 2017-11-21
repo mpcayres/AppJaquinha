@@ -340,10 +340,7 @@ public class ContainerActivity extends AppCompatActivity
     }
 
     private void launchCamera(){
-        // launch Ocr capture activity.
         Intent intent = new Intent(this, OcrCaptureActivity.class);
-        //intent.putExtra(OcrCaptureActivity.AutoFocus, autoFocus.isChecked());
-        //intent.putExtra(OcrCaptureActivity.UseFlash, useFlash.isChecked());
         startActivityForResult(intent, RC_OCR_CAPTURE);
     }
 
@@ -447,6 +444,7 @@ public class ContainerActivity extends AppCompatActivity
         if (fragment instanceof HomeFragment){
             mDatabase.child("users").child(uid).setValue(user);
             addAlimentoDiario(alimento, ((HomeFragment) fragment).getData());
+            ((HomeFragment) fragment).setupSearchBar();
         } else if(fragment instanceof GeladeiraFragment){
             mDatabase.child("users").child(uid).setValue(user);
             ((GeladeiraFragment) fragment).setGeladeira();

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -32,6 +33,7 @@ public class GeladeiraFragment extends Fragment implements SearchBar.SearchBarLi
     GeladeiraRecyclerViewAdapter geladeiraRecyclerViewAdapter;
     RecyclerView recyclerView;
     ArrayList<String> geladeiraArrayList = new ArrayList<>();
+    boolean setSearchBar = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,7 +60,10 @@ public class GeladeiraFragment extends Fragment implements SearchBar.SearchBarLi
         view.findViewById(R.id.cameraButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchBar.dismissKeyboard();
+                if(searchBar != null){
+                    searchBar.dismissKeyboard();
+                }
+                setSearchBar = false;
                 ((ContainerActivity) getActivity()).onCameraSelected();
             }
         });
@@ -66,10 +71,27 @@ public class GeladeiraFragment extends Fragment implements SearchBar.SearchBarLi
         view.findViewById(R.id.adicionarButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchBar.dismissKeyboard();
+                if(searchBar != null){
+                    searchBar.dismissKeyboard();
+                }
+                setSearchBar = false;
                 ((ContainerActivity) getActivity()).onAlimentoSelected();
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        searchBar.dismissKeyboard();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(searchBar != null){
+            searchBar.dismissKeyboard();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void setGeladeira() {
@@ -85,7 +107,12 @@ public class GeladeiraFragment extends Fragment implements SearchBar.SearchBarLi
 
     private void setupSearchBar() {
         if(searchBar != null) {
-            searchBar.setupSearchBar(getActivity(), this, user.getGeladeira().getAlimentoList());
+            if(!setSearchBar) {
+                searchBar.setupSearchBar(getActivity(), this, user.getGeladeira().getAlimentoList());
+                setSearchBar = true;
+            } else{
+                searchBar.changeArrayAdapter(user.getGeladeira().getAlimentoList());
+            }
         }
     }
 

@@ -49,12 +49,8 @@ public class SearchBar extends RelativeLayout {
 
     public void setupSearchBar(Context context, SearchBarListener sbl, List<Alimento> alimentos){
         this.alimentos = alimentos;
-        if(mContext == null || mCallBack == null) {
-            initializeViews(context, sbl);
-            setupOfChildren();
-        } else{
-            changeArrayAdapter(alimentos);
-        }
+        initializeViews(context, sbl);
+        setupOfChildren();
     }
 
     private void initializeViews(Context context, SearchBarListener sbl) {
@@ -100,50 +96,49 @@ public class SearchBar extends RelativeLayout {
     }
 
     private void setupAdapter(final ArrayList<String> alimentosNomes) {
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(mContext,
-                R.layout.custom_dropdown, alimentosNomes);
-        act.setAdapter(arrayAdapter);
-        //Caso preciso setar numero de caracteres esperados antes de oferecer sugestões, o minimo é 1
-        act.setThreshold(1);
-        act.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String alimentoNome = (String) parent.getItemAtPosition(position);
-                //Para encontar o incide desse objeto no array não filtrado
-                int indexOriginal = alimentosNomes.indexOf(alimentoNome);
-                mCallBack.onDropDownItemClicked(indexOriginal);
-            }
-        });
-
-        act.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCallBack.onSearchBarClickedOrSomethingTyped();
-            }
-        });
-        act.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                if(count != 0) {
-                    crossFade(xlimparBt, lupaIV);
+        if (act != null && mContext != null && alimentosNomes != null) {
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(mContext,
+                    R.layout.custom_dropdown, alimentosNomes);
+            act.setAdapter(arrayAdapter);
+            //Caso preciso setar numero de caracteres esperados antes de oferecer sugestões, o minimo é 1
+            act.setThreshold(1);
+            act.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String alimentoNome = (String) parent.getItemAtPosition(position);
+                    //Para encontar o incide desse objeto no array não filtrado
+                    int indexOriginal = alimentosNomes.indexOf(alimentoNome);
+                    mCallBack.onDropDownItemClicked(indexOriginal);
                 }
-                else {
-                    crossFade(lupaIV, xlimparBt);
+            });
+
+            act.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mCallBack.onSearchBarClickedOrSomethingTyped();
                 }
-            }
+            });
+            act.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            @Override
-            public void afterTextChanged(Editable s) {
-//                mCallBack.onSearchBarClickedOrSomethingTyped();
+                }
 
-            }
-        });
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    if (count != 0) {
+                        crossFade(xlimparBt, lupaIV);
+                    } else {
+                        crossFade(lupaIV, xlimparBt);
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+        }
     }
 
     //Se lupa tiver visivel entao x nao estará, assim invertemos a visibilidade
@@ -159,13 +154,17 @@ public class SearchBar extends RelativeLayout {
     }
 
     public void dismissKeyboard(){
-        InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(act.getWindowToken(), 0);
+        if(mContext != null) {
+            InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(act.getWindowToken(), 0);
+        }
     }
 
     public void showKeyboard(){
-        InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(act, 0);
+        if(mContext != null) {
+            InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(act, 0);
+        }
     }
 
     public void showDropDown() {

@@ -1,6 +1,7 @@
 package ihc.appjaquinha.container.home;
 
 
+import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,18 +14,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import ihc.appjaquinha.R;
 import ihc.appjaquinha.container.ContainerActivity;
+import ihc.appjaquinha.container.SearchBar;
 import ihc.appjaquinha.database.comida.diario.ConsumoAlimento;
 import ihc.appjaquinha.database.comida.diario.ConsumoDia;
 
+import static ihc.appjaquinha.auth.LoginActivity.dateToString;
 import static ihc.appjaquinha.container.ContainerActivity.user;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SearchBar.SearchBarListener {
     private String data;
-    private TextView textData;
-
+    private SearchBar searchBar;
     HomeRecyclerViewAdapter homeRecyclerViewAdapter;
     RecyclerView recyclerView;
     ArrayList<String> homeArrayList = new ArrayList<>();
@@ -32,15 +35,18 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        searchBar = view.findViewById(R.id.geladeira_searchbar);
+
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        textData = view.findViewById(R.id.data);
-        if(data != null) textData.setText(data);
+        if(data != null) ((ContainerActivity) getActivity()).setToolbarText(data);
 
         recyclerView = view.findViewById(R.id.home_recyclerview);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -65,7 +71,8 @@ public class HomeFragment extends Fragment {
 
     public void setData(String data){
         this.data = data;
-        if(textData != null) textData.setText(data);
+        Activity activity = getActivity();
+        if(activity != null) ((ContainerActivity) activity).setToolbarText(data);
         findDia();
     }
 
@@ -102,6 +109,9 @@ public class HomeFragment extends Fragment {
             homeArrayList.add(c.getAlimento().getNome() + " :: " + c.getQuantidade());
         }
         if(homeRecyclerViewAdapter != null) homeRecyclerViewAdapter.swap();
+        if(user != null && user.getGeladeira() != null){
+            setupSearchBar();
+        }
     }
 
     public ConsumoDia getConsumoDia(){
@@ -119,6 +129,25 @@ public class HomeFragment extends Fragment {
 
     public String getData(){
         return data;
+    }
+
+    private void setupSearchBar() {
+        if(searchBar != null) {
+            searchBar.setupSearchBar(getActivity(), this, user.getGeladeira().getAlimentoList());
+        }
+    }
+
+    @Override
+    public void onDropDownItemClicked(int indiceOriginal) {
+        ((ContainerActivity) getActivity()).addAlimentoDiario(
+                user.getGeladeira().getAlimentoList().get(indiceOriginal),
+                dateToString(Calendar.getInstance(), "dd/MM/yyyy"));
+        searchBar.dismissKeyboard();
+    }
+
+    @Override
+    public void onSearchBarClickedOrSomethingTyped() {
+        searchBar.showDropDown();
     }
 
     public interface HomeOnClickListener {

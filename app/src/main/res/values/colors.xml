@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     //https://material.io/guidelines/style/color.html
-    <color name="colorPrimary">#F3E5F5</color>
-    <color name="colorPrimaryDark">#E1BEE7</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryLight">#7dc2df</color>
+    <color name="colorPrimary">#FF247BA0</color>
+    <color name="colorPrimaryDark">#003f70</color>
+    <color name="colorAccent">@color/material_blue_500</color>
+    <color name="colorAccentLight">#747573</color>
+    <color name="disabled">#bdbdbd</color>
 
     <color name="nav_drawer_bg">#221133</color>
     <color name="toolbar_icon">#F6D282</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#0000</color>
+    <color name="pink">#FF4081</color>
+    <color name="purple">#a940ff</color>
+    <color name="dark_red">#990000</color>
+    <color name="blue">#00f</color>
+    <color name="red">#ef5350</color>
+    <color name="green">#17b180</color>
+    <color name="gray">#BDBDBD</color>
+    <color name="ligth_gray">#EFEFEF</color>
+    <color name="dark_gray">#616161</color>
+    <color name="site_gray">#50514F</color>
+    <color name="light_blue">#64B5F6</color>
+    <color name="material_blue_500">#00a59e</color>
+
 </resources>

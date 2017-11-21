@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import ihc.appjaquinha.R;
+import ihc.appjaquinha.container.ContainerActivity;
 import ihc.appjaquinha.database.objetivos.InfoObjetivo;
 
 import static ihc.appjaquinha.container.ContainerActivity.user;
@@ -43,6 +44,7 @@ public class ObjetivosFragment  extends Fragment implements AdapterView.OnItemSe
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        ((ContainerActivity) getActivity()).setToolbarText("Objetivos");
         return inflater.inflate(R.layout.fragment_objetivos, container, false);
     }
 

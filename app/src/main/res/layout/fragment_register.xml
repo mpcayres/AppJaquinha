@@ -54,22 +54,56 @@
             app:layout_constraintTop_toBottomOf="@+id/senha"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
-
-        <EditText
-            android:id="@+id/data"
+        <TextView
+            android:id="@+id/data_de_nascimento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="12"
+            android:ems="16"
             android:backgroundTint="@android:color/white"
-            android:inputType="text|datetime"
+            android:inputType="number"
             android:textColor="#000000"
-            android:hint="@string/data_de_nascimento"
+            android:hint= "@string/data_de_nascimento"
             android:maxLines="1"
             android:imeOptions="actionNext"
-            android:focusable="false"
             app:layout_constraintTop_toBottomOf="@+id/nome"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
+        <!--android:focusable="false"-->
+
+
+        <Spinner
+            android:id="@+id/diaSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:ems="12"
+            android:imeOptions="actionNext"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/data_de_nascimento" />
+
+        <Spinner
+            android:id="@+id/mesSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="12"
+            android:imeOptions="actionNext"
+            app:layout_constraintLeft_toRightOf="@id/diaSpinner"
+
+            app:layout_constraintTop_toBottomOf="@+id/data_de_nascimento" />
+       <EditText
+             android:id="@+id/anoText"
+             android:layout_width="50dp"
+             android:layout_height="wrap_content"
+             android:ems="12"
+             android:backgroundTint="@android:color/white"
+             android:inputType="number"
+             android:textColor="#000000"
+             android:hint= "@string/ano_de_nascimento"
+             android:maxLines="1"
+             android:imeOptions="actionNext"
+             app:layout_constraintTop_toBottomOf="@+id/data_de_nascimento"
+            app:layout_constraintLeft_toRightOf="@id/mesSpinner"/>
+        <!--android:focusable="false"-->
 
         <EditText
             android:id="@+id/sexo"
@@ -82,7 +116,7 @@
             android:hint="@string/sexo"
             android:maxLines="1"
             android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@+id/data"
+            app:layout_constraintTop_toBottomOf="@+id/anoText"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 

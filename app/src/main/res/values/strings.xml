@@ -17,7 +17,8 @@
     <string name="criar_conta">Cadastrar</string>
     <string name="entrar">Entrar</string>
     <string name="nome_de_usu_rio">Nome de usuário</string>
-    <string name="data_de_nascimento">Data de nascimento</string>
+    <string name="data_de_nascimento">Data de Nascimento</string>
+    <string name="ano_de_nascimento">2000</string>
     <string name="sexo">Sexo</string>
     <string name="peso">Massa corporal (kg)</string>
     <string name="altura">Altura (cm)</string>
@@ -30,6 +31,20 @@
     <string name="objetivo">Objetivo</string>
     <string name="adicionar_data">Adicionar data</string>
     <string name="nomeDoApp">Pé na Jaca</string>
+    <string-array name="meses">
+        <item>Janeiro</item>
+        <item>Fevereiro</item>
+        <item>Março</item>
+        <item>Abril</item>
+        <item>Maio</item>
+        <item>Junho</item>
+        <item>Julho</item>
+        <item>Agosto</item>
+        <item>Setembro</item>
+        <item>Outubro</item>
+        <item>Novembro</item>
+        <item>Dezembro</item>
+    </string-array>
 
     //alimento
     <string name="nome_alimento">Nome do alimento</string>

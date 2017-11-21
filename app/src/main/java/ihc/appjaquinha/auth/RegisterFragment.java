@@ -5,22 +5,30 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
+import java.lang.reflect.Field;
 import java.util.Calendar;
+import java.util.List;
 
 import ihc.appjaquinha.R;
 
 public class RegisterFragment extends Fragment {
     private OnRegisterInteractionListener mCallback;
-    private EditText emailText, senhaText, nomeText, dataText, sexoText, pesoText, alturaText;
+    private EditText emailText, senhaText, nomeText, dataText, anoData, sexoText, pesoText, alturaText;
     private DatePickerDialog data_Dialog;
+    private Spinner diaData, mesData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,11 +42,40 @@ public class RegisterFragment extends Fragment {
         emailText = view.findViewById(R.id.email);
         senhaText = view.findViewById(R.id.senha);
         nomeText = view.findViewById(R.id.nome);
-        dataText = view.findViewById(R.id.data);
+        //dataText = view.findViewById(R.id.data);
         sexoText = view.findViewById(R.id.sexo);
         pesoText = view.findViewById(R.id.peso);
         alturaText = view.findViewById(R.id.altura);
+        /*
+            Isso aqui tudo é para criar o seletor de data
+        */
+        //primeiro, os views
+        diaData = view.findViewById(R.id.diaSpinner);
+        mesData = view.findViewById(R.id.mesSpinner);
+        anoData = view.findViewById(R.id.anoText);
 
+        //Agora, colocando um ArrayAdapter no diaData, que pega o
+        //array de inteiros e coloca como campos do spinner
+        Integer[] dias = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                                       11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                                       21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
+        ArrayAdapter<Integer> adapterDias = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, dias);
+        diaData.setAdapter(adapterDias);
+        //agora, limitando a altura do spinner por meio de um popup
+        SpinnerSize(diaData, 200);
+
+        //Colocando os valores do segundo spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                                                                            R.array.meses,
+                                                                            android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        mesData.setAdapter(adapter);
+        //limitando o tamanho do spinner
+        SpinnerSize(mesData, 200);
+
+        /*
         Calendar data_atual = Calendar.getInstance();
         data_Dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 
@@ -60,6 +97,7 @@ public class RegisterFragment extends Fragment {
                 data_Dialog.show();
             }
         });
+        */
 
         view.findViewById(R.id.cadastrobutton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +106,7 @@ public class RegisterFragment extends Fragment {
                 String email = emailText.getText().toString();
                 String senha = senhaText.getText().toString();
                 String nome = nomeText.getText().toString();
-                String data = dataText.getText().toString();
+                String data = diaData.toString() + "/" + mesData.toString() + "/" + anoData.getText().toString();//dataText.getText().toString();
                 String sexo = sexoText.getText().toString();
                 float peso = pesoText.getText().toString().isEmpty() ? 0 : Float.parseFloat(pesoText.getText().toString());
                 int altura = alturaText.getText().toString().isEmpty() ? 0 : Integer.parseInt(alturaText.getText().toString());
@@ -89,9 +127,16 @@ public class RegisterFragment extends Fragment {
                     nomeText.startAnimation(wiggle);
                     nomeText.setError("Preencha seu nome de usuário");
                 }
+          /*
                 else if(data.isEmpty() || data.equals("")) {
                     dataText.startAnimation(wiggle);
                     dataText.setError("Preencha sua data de nascimento");
+                }
+          */
+                else if(Integer.parseInt(anoData.getText().toString()) > Calendar.getInstance().get(Calendar.YEAR) ||
+                        Integer.parseInt(anoData.getText().toString()) < Calendar.getInstance().get(Calendar.YEAR) - 150 ){
+                    anoData.startAnimation(wiggle);
+                    anoData.setError("Preencha com ano válido");
                 }
                 else if(sexo.isEmpty() || sexo.equals("")) {
                     sexoText.startAnimation(wiggle);
@@ -136,5 +181,21 @@ public class RegisterFragment extends Fragment {
 
         public void onRegisterInteraction(String email, String senha, String nome, String data, String sexo, float peso, int altura);
 
+    }
+
+    private void SpinnerSize(Spinner spinner, int size){
+        try {
+            Field popup = Spinner.class.getDeclaredField("mPopup");
+            popup.setAccessible(true);
+
+            // Get private mPopup member variable and try cast to ListPopupWindow
+            android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spinner);
+
+            // Set popupWindow height to 500px
+            popupWindow.setHeight(size);
+        }
+        catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
+            // silently fail...
+        }
     }
 }

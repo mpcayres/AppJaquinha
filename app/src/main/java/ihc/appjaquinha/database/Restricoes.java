@@ -26,6 +26,7 @@ public class Restricoes {
         this.trigo = trigo;
         this.lactose = lactose;
         this.trigo = trigo;
+        this.gluten = gluten;
     }
 
     public boolean isAmendoim() {

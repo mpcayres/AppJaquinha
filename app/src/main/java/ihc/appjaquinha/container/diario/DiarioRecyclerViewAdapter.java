@@ -16,7 +16,7 @@ public class DiarioRecyclerViewAdapter extends RecyclerView.Adapter {
     private Context context;
 
 
-    public DiarioRecyclerViewAdapter(ArrayList<String> sessions, Context context) {
+    DiarioRecyclerViewAdapter(ArrayList<String> sessions, Context context) {
         this.sessionsArrayList = sessions;
         this.context = context;
     }
@@ -26,9 +26,7 @@ public class DiarioRecyclerViewAdapter extends RecyclerView.Adapter {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.list_item_diario, parent, false);
 
-        DiarioViewHolder holder = new DiarioViewHolder(view, context);
-
-        return holder;
+        return new DiarioViewHolder(view, context);
     }
 
     @Override
@@ -46,7 +44,7 @@ public class DiarioRecyclerViewAdapter extends RecyclerView.Adapter {
         return sessionsArrayList.size();
     }
 
-    public void swap() {
+    void swap() {
         notifyDataSetChanged();
     }
 }

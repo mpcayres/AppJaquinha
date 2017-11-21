@@ -24,6 +24,8 @@ public class AlimentoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_alimento, container, false);
 
+        ((ContainerActivity) getActivity()).setToolbarText("Adicione seu alimento");
+
         textnome = view.findViewById(R.id.nome);
         textporcao = view.findViewById(R.id.porcao);
         textvalorEnergetico = view.findViewById(R.id.kcal);

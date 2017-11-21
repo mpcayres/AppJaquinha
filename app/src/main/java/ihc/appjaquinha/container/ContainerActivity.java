@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
@@ -63,6 +64,7 @@ public class ContainerActivity extends AppCompatActivity
     private static final String TAG = ContainerActivity.class.getSimpleName();
     private Toolbar toolbar;
     private Drawer navDrawer;
+    private TextView toolbarText;
 
     private DatabaseReference mDatabase;
     private String uid;
@@ -80,6 +82,7 @@ public class ContainerActivity extends AppCompatActivity
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        toolbarText = findViewById(R.id.toolbar_text);
 
         Query dataUser = mDatabase.child("users").orderByKey().equalTo(uid);
         dataUser.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -330,11 +333,14 @@ public class ContainerActivity extends AppCompatActivity
         return null;
     }
 
+    public void setToolbarText(String text){
+        if(toolbarText != null){
+            toolbarText.setText(text);
+        }
+    }
+
     private void launchCamera(){
-        // launch Ocr capture activity.
         Intent intent = new Intent(this, OcrCaptureActivity.class);
-        //intent.putExtra(OcrCaptureActivity.AutoFocus, autoFocus.isChecked());
-        //intent.putExtra(OcrCaptureActivity.UseFlash, useFlash.isChecked());
         startActivityForResult(intent, RC_OCR_CAPTURE);
     }
 
@@ -389,7 +395,7 @@ public class ContainerActivity extends AppCompatActivity
         input.setLayoutParams(lp);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         builder.setView(input);
-        builder.setTitle("Determine a quantidade (g)")
+        builder.setTitle("Especifique a quantidade consumida (g)")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         float qtd = Float.parseFloat(input.getText().toString());
@@ -438,8 +444,10 @@ public class ContainerActivity extends AppCompatActivity
         if (fragment instanceof HomeFragment){
             mDatabase.child("users").child(uid).setValue(user);
             addAlimentoDiario(alimento, ((HomeFragment) fragment).getData());
-        } else{
+            ((HomeFragment) fragment).setupSearchBar();
+        } else if(fragment instanceof GeladeiraFragment){
             mDatabase.child("users").child(uid).setValue(user);
+            ((GeladeiraFragment) fragment).setGeladeira();
         }
         Toast.makeText(ContainerActivity.this, "Alimento cadastrado na geladeira.",
                 Toast.LENGTH_SHORT).show();

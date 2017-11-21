@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import ihc.appjaquinha.R;
+import ihc.appjaquinha.container.ContainerActivity;
 
 import static ihc.appjaquinha.container.ContainerActivity.user;
 
@@ -26,6 +27,7 @@ public class RestricoesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        ((ContainerActivity) getActivity()).setToolbarText("Restrições");
         return inflater.inflate(R.layout.fragment_restricoes, container, false);
     }
 

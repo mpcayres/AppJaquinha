@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    style="?android:attr/dropDownListViewStyle"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:padding="10dp"
+    android:background="@color/ligth_gray"
+    android:textColor="@color/dark_gray"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
+    android:elevation="10dp"
+    android:maxLines="1"
+    android:ellipsize="end"
+    />
+
+    <!--TODO: Margens nao ta funcionando-->

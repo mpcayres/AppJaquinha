@@ -29,8 +29,10 @@ public class DiarioFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ((ContainerActivity) getActivity()).setToolbarText("Diário");
         return inflater.inflate(R.layout.fragment_diario, container, false);
     }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

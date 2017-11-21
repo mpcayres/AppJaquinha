@@ -241,6 +241,9 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        if(tts != null && tts.isSpeaking()){
+            tts.stop();
+        }
         if (mPreview != null) {
             mPreview.stop();
         }

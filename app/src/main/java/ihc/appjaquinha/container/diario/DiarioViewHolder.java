@@ -13,7 +13,7 @@ public class DiarioViewHolder extends RecyclerView.ViewHolder implements View.On
     private Context context;
     TextView titleTextView;
 
-    public DiarioViewHolder(View itemView, Context context) {
+    DiarioViewHolder(View itemView, Context context) {
         super(itemView);
 
         this.context = context;

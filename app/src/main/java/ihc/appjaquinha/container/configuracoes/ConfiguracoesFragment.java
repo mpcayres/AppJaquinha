@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Calendar;
 
 import ihc.appjaquinha.R;
+import ihc.appjaquinha.container.ContainerActivity;
 
 import static ihc.appjaquinha.auth.LoginActivity.dateToString;
 import static ihc.appjaquinha.auth.LoginActivity.stringToDate;
@@ -36,6 +37,7 @@ public class ConfiguracoesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        ((ContainerActivity) getActivity()).setToolbarText("Configurações");
         return inflater.inflate(R.layout.fragment_configuracoes, container, false);
     }
 

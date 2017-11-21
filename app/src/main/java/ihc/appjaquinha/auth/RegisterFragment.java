@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ public class RegisterFragment extends Fragment {
     private EditText emailText, senhaText, nomeText, dataText, anoData, sexoText, pesoText, alturaText;
     private DatePickerDialog data_Dialog;
     private Spinner diaData, mesData;
-
+    private RadioButton sexoMasculino, sexoFeminino, sexoOutro;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_register, container, false);
@@ -42,10 +43,36 @@ public class RegisterFragment extends Fragment {
         emailText = view.findViewById(R.id.email);
         senhaText = view.findViewById(R.id.senha);
         nomeText = view.findViewById(R.id.nome);
-        //dataText = view.findViewById(R.id.data);
-        sexoText = view.findViewById(R.id.sexo);
         pesoText = view.findViewById(R.id.peso);
         alturaText = view.findViewById(R.id.altura);
+
+        sexoMasculino = view.findViewById(R.id.sexoMasculino);
+        sexoFeminino = view.findViewById(R.id.sexoFeminino);
+        sexoOutro = view.findViewById(R.id.sexoOutro);
+
+        sexoMasculino.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sexoFeminino.setChecked(false);
+                sexoOutro.setChecked(false);
+                sexoMasculino.setError(null);
+            }
+        });
+
+        sexoFeminino.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sexoMasculino.setChecked(false);
+                sexoOutro.setChecked(false);
+                sexoFeminino.setError(null);
+            }
+        });
+
+        sexoOutro.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sexoMasculino.setChecked(false);
+                sexoFeminino.setChecked(false);
+                sexoOutro.setError(null);
+            }
+        });
         /*
             Isso aqui tudo é para criar o seletor de data
         */
@@ -107,7 +134,19 @@ public class RegisterFragment extends Fragment {
                 String senha = senhaText.getText().toString();
                 String nome = nomeText.getText().toString();
                 String data = diaData.toString() + "/" + mesData.toString() + "/" + anoData.getText().toString();//dataText.getText().toString();
-                String sexo = sexoText.getText().toString();
+                String sexo = "";
+                if(sexoMasculino.isChecked()){
+                    sexo = "MASCULINO";
+                }else if(sexoFeminino.isChecked()){
+                    sexo = "FEMININO";
+                }else if(sexoOutro.isChecked()){
+                    sexo = "OUTRO";
+                }else{
+                    sexoMasculino.startAnimation(wiggle);
+                    sexoFeminino.startAnimation(wiggle);
+                    sexoOutro.startAnimation(wiggle);
+                    sexoOutro.setError("Escolha uma opção");
+                }
                 float peso = pesoText.getText().toString().isEmpty() ? 0 : Float.parseFloat(pesoText.getText().toString());
                 int altura = alturaText.getText().toString().isEmpty() ? 0 : Integer.parseInt(alturaText.getText().toString());
 
@@ -138,10 +177,12 @@ public class RegisterFragment extends Fragment {
                     anoData.startAnimation(wiggle);
                     anoData.setError("Preencha com ano válido");
                 }
+                /*
                 else if(sexo.isEmpty() || sexo.equals("")) {
                     sexoText.startAnimation(wiggle);
                     sexoText.setError("Preencha seu sexo");
                 }
+                */
                 else if(peso == 0) {
                     pesoText.startAnimation(wiggle);
                     pesoText.setError("Preencha sua massa corporal");

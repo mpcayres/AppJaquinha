@@ -105,6 +105,7 @@
             app:layout_constraintLeft_toRightOf="@id/mesSpinner"/>
         <!--android:focusable="false"-->
 
+        <!--
         <EditText
             android:id="@+id/sexo"
             android:layout_width="wrap_content"
@@ -118,8 +119,42 @@
             android:imeOptions="actionNext"
             app:layout_constraintTop_toBottomOf="@+id/anoText"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent" />-->
+        <TextView
+            android:id="@+id/sexoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sexo:"
+            app:layout_constraintTop_toBottomOf="@+id/anoText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/sexoMasculino"/>
 
+        <RadioButton
+            android:id="@+id/sexoMasculino"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Masculino"
+            app:layout_constraintTop_toBottomOf="@+id/anoText"
+            app:layout_constraintLeft_toLeftOf="@id/sexoText"
+            app:layout_constraintRight_toLeftOf="@id/sexoFeminino"/>
+        <RadioButton
+            android:id="@+id/sexoFeminino"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Feminino"
+            app:layout_constraintTop_toBottomOf="@+id/anoText"
+            app:layout_constraintRight_toLeftOf="@id/sexoOutro"
+            app:layout_constraintLeft_toRightOf="@id/sexoMasculino"
+            />
+        <RadioButton
+            android:id="@+id/sexoOutro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Outro"
+            app:layout_constraintTop_toBottomOf="@+id/anoText"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/sexoFeminino"
+            />
         <EditText
             android:id="@+id/peso"
             android:layout_width="wrap_content"
@@ -131,7 +166,7 @@
             android:hint="@string/peso"
             android:maxLines="1"
             android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@+id/sexo"
+            app:layout_constraintTop_toBottomOf="@+id/sexoOutro"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 

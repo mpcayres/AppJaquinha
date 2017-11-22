@@ -5,20 +5,26 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.reflect.Field;
 import java.util.Calendar;
 
 import ihc.appjaquinha.R;
@@ -30,14 +36,15 @@ import static ihc.appjaquinha.container.ContainerActivity.user;
 
 public class ConfiguracoesFragment extends Fragment {
     private DatabaseReference mDatabase;
-    private EditText nomeText, dataText, sexoText, pesoText, alturaText;
+    private EditText emailText, senhaText, nomeText, anoData, sexoText, pesoText, alturaText;
+    private TextView dataText;
     private DatePickerDialog data_Dialog;
+    private Spinner diaData, mesData;
+    private RadioButton sexoMasculino, sexoFeminino, sexoOutro;
 
-    @Nullable
+    private String erroLog = "ConfiguracoesFragment";
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        ((ContainerActivity) getActivity()).setToolbarText("Configurações");
         return inflater.inflate(R.layout.fragment_configuracoes, container, false);
     }
 
@@ -45,61 +52,136 @@ public class ConfiguracoesFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        nomeText = view.findViewById(R.id.nome);
-        dataText = view.findViewById(R.id.data);
-        sexoText = view.findViewById(R.id.sexo);
-        pesoText = view.findViewById(R.id.peso);
-        alturaText = view.findViewById(R.id.altura);
+        //emailText = view.findViewById(R.id.emailConfig);
+        //senhaText = view.findViewById(R.id.senha);
+        nomeText = view.findViewById(R.id.nomeConfig);
+        pesoText = view.findViewById(R.id.pesoConfig);
+        alturaText = view.findViewById(R.id.alturaConfig);
+        dataText = view.findViewById(R.id.data_de_nascimentoConfig);
 
-        setConfiguracoes();
+        sexoMasculino = view.findViewById(R.id.sexoMasculinoConfig);
+        sexoFeminino = view.findViewById(R.id.sexoFemininoConfig);
+        sexoOutro = view.findViewById(R.id.sexoOutroConfig);
 
-        Calendar data_atual = Calendar.getInstance();
-        data_Dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar dataPicker = Calendar.getInstance();
-                dataPicker.set(year, monthOfYear, dayOfMonth);
-                dataText.setText(dateToString(dataPicker, "dd/MM/yyyy"));
-            }
-
-        }, data_atual.get(Calendar.YEAR)-20, data_atual.get(Calendar.MONTH), data_atual.get(Calendar.DAY_OF_MONTH));
-        data_Dialog.getDatePicker().setMaxDate(data_atual.getTimeInMillis());
-        if(!dataText.getText().toString().isEmpty()) {
-            Calendar aux = stringToDate(dataText.getText().toString(), "dd/MM/yyyy");
-            data_Dialog.updateDate(aux.get(Calendar.YEAR), aux.get(Calendar.MONTH), aux.get(Calendar.DAY_OF_MONTH));
-        }
-        dataText.setOnClickListener(new View.OnClickListener() {
-            @Override
+        sexoMasculino.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                data_Dialog.show();
+                sexoFeminino.setChecked(false);
+                sexoOutro.setChecked(false);
+                sexoMasculino.setError(null);
             }
         });
+
+        sexoFeminino.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sexoMasculino.setChecked(false);
+                sexoOutro.setChecked(false);
+                sexoFeminino.setError(null);
+            }
+        });
+
+        sexoOutro.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sexoMasculino.setChecked(false);
+                sexoFeminino.setChecked(false);
+                sexoOutro.setError(null);
+            }
+        });
+        /*
+            Isso aqui tudo é para criar o seletor de data
+        */
+        //primeiro, os views
+        diaData = view.findViewById(R.id.diaSpinnerConfig);
+        mesData = view.findViewById(R.id.mesSpinnerConfig);
+        anoData = view.findViewById(R.id.anoTextConfig);
+        Log.v(erroLog, "Todos os Views relacionados");
+
+        //Agora, colocando um ArrayAdapter no diaData, que pega o
+        //array de inteiros e coloca como campos do spinner
+        Integer[] dias31 = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
+        Integer[] dias30 = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
+        Integer[] dias28 = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                21, 22, 23, 24, 25, 26, 27, 28};
+        final ArrayAdapter<Integer> adapterDias31 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, dias31);
+        final ArrayAdapter<Integer> adapterDias30 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, dias31);
+        final ArrayAdapter<Integer> adapterDias28 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, dias31);
+
+        diaData.setAdapter(adapterDias31);
+        //agora, limitando a altura do spinner por meio de um popup
+        SpinnerSize(diaData, 200);
+
+        //Colocando os valores do segundo spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.meses,
+                android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        mesData.setAdapter(adapter);
+        //limitando o tamanho do spinner
+        SpinnerSize(mesData, 200);
+
+        setConfiguracoes();
 
         view.findViewById(R.id.atualizarbutton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-
+                Log.v(erroLog, "Botão de cadastro clicado.");
                 Animation wiggle = AnimationUtils.loadAnimation(getContext(), R.anim.wiggle);
-
+                String email = emailText.getText().toString();
+                String senha = senhaText.getText().toString();
                 String nome = nomeText.getText().toString();
-                String data = dataText.getText().toString();
-                String sexo = sexoText.getText().toString();
+                String data = (diaData.getSelectedItemPosition()+1) + "/" + (mesData.getSelectedItemPosition()+1) + "/" + anoData.getText().toString();//dataText.getText().toString();
+                String sexo = "";
+                if(sexoMasculino.isChecked()){
+                    sexo = "MASCULINO";
+                }else if(sexoFeminino.isChecked()){
+                    sexo = "FEMININO";
+                }else if(sexoOutro.isChecked()){
+                    sexo = "OUTRO";
+                }else{
+                    sexoMasculino.startAnimation(wiggle);
+                    sexoFeminino.startAnimation(wiggle);
+                    sexoOutro.startAnimation(wiggle);
+                    sexoOutro.setError("Escolha uma opção");
+                }
                 float peso = pesoText.getText().toString().isEmpty() ? 0 : Float.parseFloat(pesoText.getText().toString());
                 int altura = alturaText.getText().toString().isEmpty() ? 0 : Integer.parseInt(alturaText.getText().toString());
 
-                if(nome.isEmpty() || nome.equals("")) {
+                if(email.isEmpty() || email.equals("")) {
+                    emailText.startAnimation(wiggle);
+                    emailText.setError("Preencha seu email");
+                }
+                else if(!email.contains("@") || !email.contains(".")) {
+                    emailText.startAnimation(wiggle);
+                    emailText.setError("Email inválido");
+                }
+                else if(senha.isEmpty() || senha.equals("")) {
+                    senhaText.startAnimation(wiggle);
+                    senhaText.setError("Preencha sua senha");
+                }
+                else if(nome.isEmpty() || nome.equals("")) {
                     nomeText.startAnimation(wiggle);
                     nomeText.setError("Preencha seu nome de usuário");
                 }
-                else if(data.isEmpty() || data.equals("")) {
+
+                else if(mesData.getSelectedItemPosition() == 1){
+                    diaData.setAdapter(adapterDias28);
+                    diaData.setSelection(0, true);
+                    Log.v(erroLog, "Dia incompativel com mês Fevereiro");
                     dataText.startAnimation(wiggle);
-                    dataText.setError("Preencha sua data de nascimento");
+                    dataText.setError("Dia inválido para o mês escolhido");
                 }
-                else if(sexo.isEmpty() || sexo.equals("")) {
-                    sexoText.startAnimation(wiggle);
-                    sexoText.setError("Preencha seu sexo");
+
+
+                else if(Integer.parseInt(anoData.getText().toString()) > Calendar.getInstance().get(Calendar.YEAR) ||
+                        Integer.parseInt(anoData.getText().toString()) < Calendar.getInstance().get(Calendar.YEAR) - 150 ){
+                    anoData.startAnimation(wiggle);
+                    anoData.setError("Preencha com ano válido");
                 }
                 else if(peso == 0) {
                     pesoText.startAnimation(wiggle);
@@ -119,12 +201,63 @@ public class ConfiguracoesFragment extends Fragment {
     }
 
     public void setConfiguracoes(){
+        Log.v(erroLog, "setConfiguracoes.");
         if (user != null) {
+            Log.v(erroLog, "user not null.");
             nomeText.setText(user.getUsername());
-            dataText.setText(user.getNascimento());
-            sexoText.setText(user.getSexo());
+            Log.v(erroLog, "Name is set: " + nomeText.getText());
+            //dataText.setText(user.getNascimento());
+            String dataNascimento = user.getNascimento();
+            Log.v(erroLog, "Data de nascimento: " + dataNascimento);
+            int indexOfBar1 = dataNascimento.indexOf('/');
+            Log.v(erroLog, "indexOfBar1: " + indexOfBar1);
+            int indexOfBar2 = dataNascimento.indexOf('/',user.getNascimento().indexOf('/')+1);
+            Log.v(erroLog, "indexOfBar2: " + indexOfBar2);
+
+            String dia = dataNascimento.substring(0, indexOfBar1);
+            Log.v(erroLog, "Dia: " + dia );
+            diaData.setSelection(Integer.parseInt(dia)-1);
+
+            String mes = dataNascimento.substring(indexOfBar1+1, indexOfBar2);
+            Log.v(erroLog, "Mes: " + mes );
+            mesData.setSelection(Integer.parseInt(mes)-1);
+
+            String ano = user.getNascimento().substring(indexOfBar2+1);
+            Log.v(erroLog, "Ano: " + ano );
+            anoData.setText(ano);
+
+
+            if(user.getSexo().equals("MASCULINO")){
+                Log.v(erroLog, "Sexo is set: Masculino");
+                sexoMasculino.setChecked(true);
+            }else if(user.getSexo().equals("FEMININO")){
+                Log.v(erroLog, "Sexo Feminino");
+                sexoFeminino.setChecked(true);
+            }else if(user.getSexo().equals("OUTRO")){
+                Log.v(erroLog, "Sexo Outro");
+                sexoOutro.setChecked(true);
+            }
             pesoText.setText(String.valueOf(user.getPeso()));
+            Log.v(erroLog, "Peso is set: " + pesoText.getText());
             alturaText.setText(String.valueOf(user.getAltura()));
+            Log.v(erroLog, "Altura is set: " + alturaText.getText());
+
+        }
+        Log.v(erroLog, "all config set.");
+    }
+    private void SpinnerSize(Spinner spinner, int size){
+        try {
+            Field popup = Spinner.class.getDeclaredField("mPopup");
+            popup.setAccessible(true);
+
+            // Get private mPopup member variable and try cast to ListPopupWindow
+            android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spinner);
+
+            // Set popupWindow height to 500px
+            popupWindow.setHeight(size);
+        }
+        catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
+            // silently fail...
         }
     }
 }

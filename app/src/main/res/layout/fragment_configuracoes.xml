@@ -2,44 +2,81 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_height="wrap_content">
+
 
         <EditText
-            android:id="@+id/nome"
+            android:id="@+id/nomeConfig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="12"
             android:backgroundTint="@android:color/white"
             android:inputType="textPersonName"
-            android:textColor="#ffff"
+            android:textColor="#000000"
             android:hint="@string/nome_de_usu_rio"
             android:maxLines="1"
             android:imeOptions="actionNext"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
+        <TextView
+            android:id="@+id/data_de_nascimentoConfig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:backgroundTint="@android:color/white"
+            android:inputType="number"
+            android:textColor="#000000"
+            android:hint= "@string/data_de_nascimento"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            app:layout_constraintTop_toBottomOf="@+id/nomeConfig"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+        <!--android:focusable="false"-->
 
-        <EditText
-            android:id="@+id/data"
+
+        <Spinner
+            android:id="@+id/diaSpinnerConfig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:ems="12"
+            android:imeOptions="actionNext"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/data_de_nascimentoConfig" />
+
+        <Spinner
+            android:id="@+id/mesSpinnerConfig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="12"
+            android:imeOptions="actionNext"
+            app:layout_constraintLeft_toRightOf="@id/diaSpinnerConfig"
+
+            app:layout_constraintTop_toBottomOf="@+id/data_de_nascimentoConfig" />
+        <EditText
+            android:id="@+id/anoTextConfig"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:ems="12"
             android:backgroundTint="@android:color/white"
-            android:textColor="#ffff"
-            android:hint="@string/data_de_nascimento"
+            android:inputType="number"
+            android:textColor="#000000"
+            android:hint= "@string/ano_de_nascimento"
             android:maxLines="1"
             android:imeOptions="actionNext"
-            android:focusable="false"
-            app:layout_constraintTop_toBottomOf="@+id/nome"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/data_de_nascimentoConfig"
+            app:layout_constraintLeft_toRightOf="@id/mesSpinnerConfig"/>
+        <!--android:focusable="false"-->
 
+        <!--
         <EditText
             android:id="@+id/sexo"
             android:layout_width="wrap_content"
@@ -47,41 +84,75 @@
             android:ems="12"
             android:backgroundTint="@android:color/white"
             android:inputType="textAutoComplete"
-            android:textColor="#ffff"
+            android:textColor="#000000"
             android:hint="@string/sexo"
             android:maxLines="1"
             android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@+id/data"
+            app:layout_constraintTop_toBottomOf="@+id/anoText"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent" />-->
+        <TextView
+            android:id="@+id/sexoTextConfig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sexo:"
+            app:layout_constraintTop_toBottomOf="@+id/anoTextConfig"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/sexoMasculinoConfig"/>
 
+        <RadioButton
+            android:id="@+id/sexoMasculinoConfig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Masculino"
+            app:layout_constraintTop_toBottomOf="@+id/anoTextConfig"
+            app:layout_constraintLeft_toLeftOf="@id/sexoTextConfig"
+            app:layout_constraintRight_toLeftOf="@id/sexoFemininoConfig"/>
+        <RadioButton
+            android:id="@+id/sexoFemininoConfig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Feminino"
+            app:layout_constraintTop_toBottomOf="@+id/anoTextConfig"
+            app:layout_constraintRight_toLeftOf="@id/sexoOutroConfig"
+            app:layout_constraintLeft_toRightOf="@id/sexoMasculinoConfig"
+            />
+        <RadioButton
+            android:id="@+id/sexoOutroConfig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Outro"
+            app:layout_constraintTop_toBottomOf="@+id/anoTextConfig"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/sexoFemininoConfig"
+            />
         <EditText
-            android:id="@+id/peso"
+            android:id="@+id/pesoConfig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="12"
             android:backgroundTint="@android:color/white"
             android:inputType="number"
-            android:textColor="#ffff"
+            android:textColor="#000000"
             android:hint="@string/peso"
             android:maxLines="1"
             android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@+id/sexo"
+            app:layout_constraintTop_toBottomOf="@+id/sexoOutroConfig"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
         <EditText
-            android:id="@+id/altura"
+            android:id="@+id/alturaConfig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="12"
             android:backgroundTint="@android:color/white"
             android:inputType="number"
-            android:textColor="#ffff"
+            android:textColor="#000000"
             android:hint="@string/altura"
             android:maxLines="1"
             android:imeOptions="actionDone"
-            app:layout_constraintTop_toBottomOf="@+id/peso"
+            app:layout_constraintTop_toBottomOf="@+id/pesoConfig"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
@@ -89,15 +160,14 @@
             android:id="@+id/atualizarbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
             android:layout_marginTop="10dp"
+            android:background="@null"
+            android:text="@string/atualizar"
             android:textSize="6pt"
             android:textColor="#00e2ba"
             android:typeface="sans"
-            android:text="@string/atualizar"
-            app:layout_constraintRight_toRightOf="@id/altura"
-            app:layout_constraintTop_toBottomOf="@+id/altura" />
+            app:layout_constraintRight_toRightOf="@id/alturaConfig"
+            app:layout_constraintTop_toBottomOf="@+id/alturaConfig" />
 
     </android.support.constraint.ConstraintLayout>
-
 </ScrollView>

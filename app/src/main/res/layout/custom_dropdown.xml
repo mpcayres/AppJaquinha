@@ -16,5 +16,3 @@
     android:maxLines="1"
     android:ellipsize="end"
     />
-
-    <!--TODO: Margens nao ta funcionando-->

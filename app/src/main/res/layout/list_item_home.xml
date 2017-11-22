@@ -11,6 +11,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Comida"
         android:id="@+id/Food"
+        android:textColor="@color/white"
         android:layout_weight="1" />
 
     <ImageButton

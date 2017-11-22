@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:background="@null"
         android:text="@string/adicionar_data"
-        android:textSize="6pt"
+        android:textSize="8pt"
         android:textColor="#00e2ba"
         android:typeface="sans"/>
 

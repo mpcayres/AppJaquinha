@@ -56,7 +56,7 @@ public class ObjetivosFragment  extends Fragment implements AdapterView.OnItemSe
         String[] items = new String[]{"Valor Energético", "Carboidratos", "Proteínas",
         "Gorduras Totais", "Gorduras Saturadas", "Gorduras Trans", "Fibra Alimentar", "Sódio",
                 "Açúcares", "Colesterol", "Cálcio", "Ferro"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item, items);
         dropdown.setAdapter(adapter);
         dropdown.setSelection(0, false);
         dropdown.setOnTouchListener(new View.OnTouchListener() {

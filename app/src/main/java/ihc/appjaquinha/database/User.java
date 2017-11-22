@@ -101,6 +101,7 @@ public class User {
     }
 
     public Diario getDiario() {
+        if(diario == null) diario = new Diario();
         return diario;
     }
 
@@ -109,6 +110,7 @@ public class User {
     }
 
     public Geladeira getGeladeira() {
+        if(geladeira == null) geladeira = new Geladeira();
         return geladeira;
     }
 
@@ -117,6 +119,7 @@ public class User {
     }
 
     public Objetivos getObjetivos() {
+        if(objetivos == null) objetivos = new Objetivos();
         return objetivos;
     }
 
@@ -125,6 +128,7 @@ public class User {
     }
 
     public Restricoes getRestricoes() {
+        if(restricoes == null) restricoes = new Restricoes();
         return restricoes;
     }
 

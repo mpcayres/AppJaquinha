@@ -5,9 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:textColor="@color/white"
+            android:text="@string/nome_alimento"
+            android:maxLines="1"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/nome"
@@ -18,10 +29,18 @@
             android:inputType="textAutoComplete"
             android:textColor="#ffff"
             android:hint="@string/nome_alimento"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionNext"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:imeOptions="actionNext"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:textColor="@color/white"
+            android:text="@string/porcao"
+            android:maxLines="1"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/porcao"
@@ -32,11 +51,18 @@
             android:inputType="number"
             android:textColor="#ffff"
             android:hint="@string/porcao"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@id/nome"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:imeOptions="actionNext"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:textColor="@color/white"
+            android:text="@string/kcal"
+            android:maxLines="1"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/kcal"
@@ -47,11 +73,18 @@
             android:inputType="number"
             android:textColor="#ffff"
             android:hint="@string/kcal"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@id/porcao"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:imeOptions="actionNext"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:textColor="@color/white"
+            android:text="@string/carboidrato"
+            android:maxLines="1"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/carboidrato"
@@ -62,11 +95,18 @@
             android:inputType="number"
             android:textColor="#ffff"
             android:hint="@string/carboidrato"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@id/kcal"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:imeOptions="actionNext"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:textColor="@color/white"
+            android:text="@string/proteinas"
+            android:maxLines="1"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/proteina"
@@ -77,11 +117,18 @@
             android:inputType="number"
             android:textColor="#ffff"
             android:hint="@string/proteinas"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@id/carboidrato"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:imeOptions="actionNext"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:textColor="@color/white"
+            android:text="@string/gordurasTotais"
+            android:maxLines="1"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/gordurasTotais"
@@ -92,11 +139,18 @@
             android:inputType="number"
             android:textColor="#ffff"
             android:hint="@string/gordurasTotais"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@id/proteina"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:imeOptions="actionNext"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:textColor="@color/white"
+            android:text="@string/gordurasSat"
+            android:maxLines="1"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/gordurasSat"
@@ -107,11 +161,18 @@
             android:inputType="number"
             android:textColor="#ffff"
             android:hint="@string/gordurasSat"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@id/gordurasTotais"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:imeOptions="actionNext"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:textColor="@color/white"
+            android:text="@string/gordurasTrans"
+            android:maxLines="1"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/gordurasTrans"
@@ -122,11 +183,18 @@
             android:inputType="number"
             android:textColor="#ffff"
             android:hint="@string/gordurasTrans"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@id/gordurasSat"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:imeOptions="actionNext"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:textColor="@color/white"
+            android:text="@string/fibra"
+            android:maxLines="1"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/fibra"
@@ -137,11 +205,18 @@
             android:inputType="number"
             android:textColor="#ffff"
             android:hint="@string/fibra"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@id/gordurasTrans"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:imeOptions="actionNext"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:textColor="@color/white"
+            android:text="@string/sodio"
+            android:maxLines="1"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/sodio"
@@ -152,11 +227,18 @@
             android:inputType="number"
             android:textColor="#ffff"
             android:hint="@string/sodio"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@id/fibra"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:imeOptions="actionNext"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:textColor="@color/white"
+            android:text="@string/acucares"
+            android:maxLines="1"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/acucares"
@@ -167,11 +249,18 @@
             android:inputType="number"
             android:textColor="#ffff"
             android:hint="@string/acucares"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@id/sodio"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:imeOptions="actionNext"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:textColor="@color/white"
+            android:text="@string/colesterol"
+            android:maxLines="1"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/colesterol"
@@ -182,11 +271,18 @@
             android:inputType="number"
             android:textColor="#ffff"
             android:hint="@string/colesterol"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@id/acucares"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:imeOptions="actionNext"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:textColor="@color/white"
+            android:text="@string/calcio"
+            android:maxLines="1"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/calcio"
@@ -197,11 +293,18 @@
             android:inputType="number"
             android:textColor="#ffff"
             android:hint="@string/calcio"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionNext"
-            app:layout_constraintTop_toBottomOf="@id/colesterol"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:imeOptions="actionNext"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:textColor="@color/white"
+            android:text="@string/ferro"
+            android:maxLines="1"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/ferro"
@@ -212,54 +315,53 @@
             android:inputType="number"
             android:textColor="#ffff"
             android:hint="@string/ferro"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionDone"
-            app:layout_constraintTop_toBottomOf="@id/calcio"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:imeOptions="actionDone"/>
 
-        <Button
-            android:id="@+id/camerabutton"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@null"
-            android:text="@string/camera"
-            android:textSize="6pt"
-            android:textColor="#00e2ba"
-            android:typeface="sans"
-            app:layout_constraintTop_toBottomOf="@id/ferro"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/salvarbutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@null"
-            android:text="@string/salvar"
-            android:textSize="6pt"
-            android:textColor="#00e2ba"
-            android:typeface="sans"
-            app:layout_constraintTop_toBottomOf="@id/camerabutton"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            <ImageButton
+                android:id="@+id/camerabutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="6pt"
+                android:textColor="#00e2ba"
+                android:typeface="sans"
+                android:src="@android:drawable/ic_menu_camera" />
 
-        <Button
-            android:id="@+id/cancelarbutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@null"
-            android:text="@string/cancelar"
-            android:textSize="6pt"
-            android:textColor="#00e2ba"
-            android:typeface="sans"
-            app:layout_constraintTop_toBottomOf="@id/salvarbutton"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            <Button
+                android:id="@+id/cancelarbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:background="@null"
+                android:text="@string/cancelar"
+                android:textSize="7pt"
+                android:textColor="#00e2ba"
+                android:typeface="sans"/>
 
-    </android.support.constraint.ConstraintLayout>
+            <Button
+                android:id="@+id/salvarbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:text="@string/salvar"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:textSize="8pt"
+                android:textColor="#00e2ba"
+                android:typeface="sans"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </ScrollView>

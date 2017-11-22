@@ -132,7 +132,7 @@ public class HomeFragment extends Fragment implements SearchBar.SearchBarListene
     public void setHome(ConsumoDia consumoDia) {
         homeArrayList.clear();
         for(ConsumoAlimento c : consumoDia.getConsumoAlimentoList()){
-            homeArrayList.add(c.getAlimento().getNome() + " :: " + c.getQuantidade());
+            homeArrayList.add(c.getAlimento().getNome() + " :: " + c.getQuantidade() + " g");
         }
         if(homeRecyclerViewAdapter != null) homeRecyclerViewAdapter.swap();
         if(user != null && user.getGeladeira() != null){

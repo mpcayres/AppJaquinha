@@ -6,16 +6,22 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ScrollView;
 
 import ihc.appjaquinha.R;
 import ihc.appjaquinha.container.ContainerActivity;
 import ihc.appjaquinha.database.comida.Alimento;
 
 public class AlimentoFragment extends Fragment {
-    EditText textnome, textporcao, textvalorEnergetico, textcarboidratos, textproteinas, textgordurasTotais, textgordurasSaturadas, textgordurasTrans, textfibraAlimentar, textsodio, textacucares, textcolesterol, textcalcio, textferro;
+    private EditText textnome, textporcao, textvalorEnergetico, textcarboidratos,
+            textproteinas, textgordurasTotais, textgordurasSaturadas,
+            textgordurasTrans, textfibraAlimentar, textsodio, textacucares,
+            textcolesterol, textcalcio, textferro;
+    private ScrollView scrollview;
     Alimento alimento;
     boolean edit = false;
     int position = 0;
@@ -23,7 +29,7 @@ public class AlimentoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_alimento, container, false);
-
+        scrollview = view.findViewById(R.id.scrollAlimento);
         ((ContainerActivity) getActivity()).setToolbarText("Adicione seu alimento");
 
         textnome = view.findViewById(R.id.nome);
@@ -62,6 +68,7 @@ public class AlimentoFragment extends Fragment {
             public void onClick(View v) {
                 Animation wiggle = AnimationUtils.loadAnimation(getContext(), R.anim.wiggle);
                 if(textnome.getText().toString().isEmpty() || textnome.getText().toString().equals("")) {
+                    scrollUp();
                     textnome.startAnimation(wiggle);
                     textnome.setError("Preencha o nome do alimento");
                 } else {
@@ -90,6 +97,16 @@ public class AlimentoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().onBackPressed();
+            }
+        });
+    }
+
+    private void scrollUp(){
+        scrollview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                // Ready, move up
+                scrollview.fullScroll(View.FOCUS_UP);
             }
         });
     }

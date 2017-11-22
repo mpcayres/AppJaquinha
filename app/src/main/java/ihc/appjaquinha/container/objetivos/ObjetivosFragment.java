@@ -1,6 +1,7 @@
 package ihc.appjaquinha.container.objetivos;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -57,6 +58,7 @@ public class ObjetivosFragment  extends Fragment implements AdapterView.OnItemSe
         "Gorduras Totais", "Gorduras Saturadas", "Gorduras Trans", "Fibra Alimentar", "Sódio",
                 "Açúcares", "Colesterol", "Cálcio", "Ferro"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdown.setAdapter(adapter);
         dropdown.setSelection(0, false);
         dropdown.setOnTouchListener(new View.OnTouchListener() {
@@ -134,11 +136,15 @@ public class ObjetivosFragment  extends Fragment implements AdapterView.OnItemSe
             inputDia.setLayoutParams(lp);
             inputDia.setHint("Periodicidade (dias)");
             inputDia.setInputType(InputType.TYPE_CLASS_NUMBER);
+            inputDia.setTextColor(Color.WHITE);
+            inputDia.setHintTextColor(Color.GRAY);
 
             final EditText inputQtd = new EditText(getContext());
             inputQtd.setLayoutParams(lp);
             inputQtd.setHint("Quantidade (" + valor + ")");
             inputQtd.setInputType(InputType.TYPE_CLASS_NUMBER);
+            inputQtd.setTextColor(Color.WHITE);
+            inputQtd.setHintTextColor(Color.GRAY);
 
             LinearLayout layout = new LinearLayout(getContext());
             layout.addView(inputQtd);

@@ -212,11 +212,6 @@ public class ConfiguracoesFragment extends Fragment {
                     sexo = "FEMININO";
                 } else if(sexoOutro.isChecked()){
                     sexo = "OUTRO";
-                } else{
-                    sexoMasculino.startAnimation(wiggle);
-                    sexoFeminino.startAnimation(wiggle);
-                    sexoOutro.startAnimation(wiggle);
-                    sexoOutro.setError("Escolha uma opção");
                 }
                 float peso = pesoText.getText().toString().isEmpty() ? 0 : Float.parseFloat(pesoText.getText().toString());
                 int altura = alturaText.getText().toString().isEmpty() ? 0 : Integer.parseInt(alturaText.getText().toString());
@@ -230,6 +225,12 @@ public class ConfiguracoesFragment extends Fragment {
                         Integer.parseInt(anoData.getText().toString()) < Calendar.getInstance().get(Calendar.YEAR) - 150 ){
                     anoData.startAnimation(wiggle);
                     anoData.setError("Preencha com ano válido");
+                }
+                else if(sexo.isEmpty() || sexo.equals("")){
+                    sexoMasculino.startAnimation(wiggle);
+                    sexoFeminino.startAnimation(wiggle);
+                    sexoOutro.startAnimation(wiggle);
+                    sexoOutro.setError("Escolha uma opção");
                 }
                 else if(peso == 0) {
                     pesoText.startAnimation(wiggle);

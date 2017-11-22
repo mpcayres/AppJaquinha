@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:ems="12"
             android:hint="@string/e_mail"
+            android:textColorHint="@color/gray"
             android:inputType="textEmailAddress"
             android:textColor="@color/white"
             android:backgroundTint="@android:color/white"
@@ -59,8 +60,9 @@
             android:inputType="textPassword"
             android:textColor="@color/white"
             android:hint="@string/senha"
+            android:textColorHint="@color/gray"
             android:maxLines="1"
-            android:imeOptions="actionNext"
+            android:imeOptions="actionDone"
             app:layout_constraintTop_toBottomOf="@+id/senhaConfigView"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />

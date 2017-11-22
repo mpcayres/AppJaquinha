@@ -71,12 +71,14 @@ public class DiarioFragment extends Fragment {
     }
 
     public void setDiario(){
-        diarioArrayList.clear();
-        for(int i = 0; i < user.getDiario().getConsumoDiaList().size(); i++){
-            ConsumoDia consumoDia = user.getDiario().getConsumoDiaList().get(i);
-            diarioArrayList.add(consumoDia.getData());
+        if(user != null && user.getDiario() != null) {
+            diarioArrayList.clear();
+            for (int i = 0; i < user.getDiario().getConsumoDiaList().size(); i++) {
+                ConsumoDia consumoDia = user.getDiario().getConsumoDiaList().get(i);
+                diarioArrayList.add(consumoDia.getData());
+            }
+            if (diarioRecyclerViewAdapter != null) diarioRecyclerViewAdapter.swap();
         }
-        if(diarioRecyclerViewAdapter != null) diarioRecyclerViewAdapter.swap();
     }
 
     public interface DiarioOnClickListener {

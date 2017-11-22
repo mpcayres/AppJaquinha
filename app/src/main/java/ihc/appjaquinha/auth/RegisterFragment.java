@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -18,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,14 +33,16 @@ import ihc.appjaquinha.R;
 public class RegisterFragment extends Fragment {
     private OnRegisterInteractionListener mCallback;
     private EditText emailText, senhaText, nomeText, anoData, pesoText, alturaText;
-    private TextView dataText;
-    private DatePickerDialog data_Dialog;
     private Spinner diaData, mesData;
     private RadioButton sexoMasculino, sexoFeminino, sexoOutro;
+    private ScrollView scrollview;
     private String erroLog = "RegisterFragment";
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_register, container, false);
+        View view = inflater.inflate(R.layout.fragment_register, container, false);
+        scrollview = view.findViewById(R.id.scrollRegister);
+        return view;
     }
 
     @Override
@@ -50,7 +54,6 @@ public class RegisterFragment extends Fragment {
         nomeText = view.findViewById(R.id.nomeConfig);
         pesoText = view.findViewById(R.id.pesoConfig);
         alturaText = view.findViewById(R.id.alturaConfig);
-        dataText = view.findViewById(R.id.data_de_nascimentoConfig);
 
         sexoMasculino = view.findViewById(R.id.sexoMasculinoConfig);
         sexoFeminino = view.findViewById(R.id.sexoFemininoConfig);
@@ -203,32 +206,32 @@ public class RegisterFragment extends Fragment {
                     sexo = "FEMININO";
                 } else if(sexoOutro.isChecked()){
                     sexo = "OUTRO";
-                } else{
-                    sexoMasculino.startAnimation(wiggle);
-                    sexoFeminino.startAnimation(wiggle);
-                    sexoOutro.startAnimation(wiggle);
-                    sexoOutro.setError("Escolha uma opção");
                 }
                 float peso = pesoText.getText().toString().isEmpty() ? 0 : Float.parseFloat(pesoText.getText().toString());
                 int altura = alturaText.getText().toString().isEmpty() ? 0 : Integer.parseInt(alturaText.getText().toString());
 
                 if(email.isEmpty() || email.equals("")) {
+                    scrollUp();
                     emailText.startAnimation(wiggle);
                     emailText.setError("Preencha seu email");
                 }
                 else if(!email.contains("@") || !email.contains(".")) {
+                    scrollUp();
                     emailText.startAnimation(wiggle);
                     emailText.setError("Email inválido");
                 }
                 else if(senha.isEmpty() || senha.equals("")) {
+                    scrollUp();
                     senhaText.startAnimation(wiggle);
                     senhaText.setError("Preencha sua senha");
                 }
                 else if(senha.length() < 6) {
+                    scrollUp();
                     senhaText.startAnimation(wiggle);
                     senhaText.setError("Senha deve ter no mínimo 6 dígitos");
                 }
                 else if(nome.isEmpty() || nome.equals("")) {
+                    scrollUp();
                     nomeText.startAnimation(wiggle);
                     nomeText.setError("Preencha seu nome de usuário");
                 }
@@ -237,6 +240,12 @@ public class RegisterFragment extends Fragment {
                         Integer.parseInt(anoData.getText().toString()) < Calendar.getInstance().get(Calendar.YEAR) - 150 ){
                     anoData.startAnimation(wiggle);
                     anoData.setError("Preencha com ano válido");
+                }
+                else if(sexo.isEmpty() || sexo.equals("")){
+                    sexoMasculino.startAnimation(wiggle);
+                    sexoFeminino.startAnimation(wiggle);
+                    sexoOutro.startAnimation(wiggle);
+                    sexoOutro.setError("Escolha uma opção");
                 }
                 else if(peso == 0) {
                     pesoText.startAnimation(wiggle);
@@ -271,6 +280,16 @@ public class RegisterFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mCallback = null;
+    }
+
+    private void scrollUp(){
+        scrollview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                // Ready, move up
+                scrollview.fullScroll(View.FOCUS_UP);
+            }
+        });
     }
 
     interface OnRegisterInteractionListener {

@@ -399,6 +399,7 @@ public class ContainerActivity extends AppCompatActivity
                 LinearLayout.LayoutParams.MATCH_PARENT);
         input.setLayoutParams(lp);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setTextColor(Color.WHITE);
         builder.setView(input);
         builder.setTitle("Especifique a quantidade consumida (g)")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {

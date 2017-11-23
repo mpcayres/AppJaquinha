@@ -48,6 +48,7 @@ public class ConfiguracoesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        ((ContainerActivity) getActivity()).setToolbarText("Configurações");
         return inflater.inflate(R.layout.fragment_configuracoes, container, false);
     }
 
